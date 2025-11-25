@@ -6,10 +6,7 @@ return {
 		customparams = {
 			evolution_target = 'armcomlvl2',
 			evolution_condition = 'timer_global',
-			evolution_timer = 420,
-			inheritxpratemultiplier = 0.5,
-			childreninheritxp = "TURRET MOBILEBUILT",
-			parentsinheritxp = "TURRET MOBILEBUILT"
+			evolution_timer = 420
 		},
 		energymake = 100,
 		metalmake = 10,

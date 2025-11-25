@@ -6,10 +6,7 @@ return {
 		customparams = {
 			evolution_target = 'corcomlvl2',
 			evolution_condition = 'timer_global',
-			evolution_timer = 420,
-			inheritxpratemultiplier = 0.5,
-			childreninheritxp = "TURRET MOBILEBUILT",
-			parentsinheritxp = "TURRET MOBILEBUILT"
+			evolution_timer = 420
 		},
 		autoheal = 80,
 		speed = 45,
@@ -101,10 +98,7 @@ return {
 			evolution_condition = 'timer_global',
 			evolution_timer = 1320,
 			shield_power = 500,
-			shield_radius = 100,
-			inheritxpratemultiplier = 0.5,
-			childreninheritxp = "TURRET MOBILEBUILT",
-			parentsinheritxp = "TURRET MOBILEBUILT"
+			shield_radius = 100
 		},
 		weapondefs = {
 			armcomlaser = {
@@ -261,10 +255,7 @@ return {
 		customparams = {
 			evolution_target = 'corcomlvl4',
 			evolution_condition = 'timer_global',
-			evolution_timer = 1740,
-			inheritxpratemultiplier = 0.5,
-			childreninheritxp = "TURRET MOBILEBUILT",
-			parentsinheritxp = "TURRET MOBILEBUILT"
+			evolution_timer = 1740
 		},
 		weapondefs = {
 			corcomlaser = {
@@ -420,10 +411,7 @@ return {
 		},
 		customparams = {
 			shield_power = 500,
-			shield_radius = 100,
-			inheritxpratemultiplier = 0.5,
-			childreninheritxp = "TURRET MOBILEBUILT",
-			parentsinheritxp = "TURRET MOBILEBUILT"
+			shield_radius = 100
 		},
 		weapondefs = {
 			CORCOMLASER = {
