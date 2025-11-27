@@ -1,4 +1,4 @@
---Mini Bosses v2f
+--Mini Bosses v2g
 -- Authors: RCore
 -- bar-nuttyb-collective.github.io/configurator
 local unitDefs, tableMerge, tableCopy, raptor_matriarch_basic, customfusionexplo, spring = UnitDefs or {}, table.merge, table.copy, 'raptor_matriarch_basic', 'customfusionexplo', Spring
@@ -38,7 +38,8 @@ mqDoomAngerScale = math.min(10, nbQhpMult / 1.3 * 0.9)
 -- Compact logic for hybrid exponential/linear growth
 local queenThreshold = 20
 local exponentialPart = 10 * (1.06 ^ math.max(0, math.min(mqNumQueens, queenThreshold) - 8))
-local linearPart = math.max(0, mqNumQueens - queenThreshold)
+local x = math.max(0, mqNumQueens - queenThreshold)
+local linearPart = (x <= 80) and (0.6 * x - x*x/270) or (24.3 + (x - 80) * 0.15)
 local baseQueenAnger = exponentialPart + linearPart
 
 local mqDoomAnger = math.ceil(mqDoomAngerScale * baseQueenAnger)
