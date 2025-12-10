@@ -17,8 +17,8 @@ export const CONFIGURATION_MAPPING: ValueMapping = {
         description: 'Main NuttyB tweaks',
         values: {
             true: {
-                tweakdefs: ['~lua/tweakdefs2.lua'],
-                tweakunits: ['~lua/tweakunits.lua'],
+                tweakdefs: ['~lua/main-defs.lua'],
+                tweakunits: ['~lua/main-units.lua'],
             },
             false: undefined,
         },
@@ -28,9 +28,9 @@ export const CONFIGURATION_MAPPING: ValueMapping = {
         values: {
             true: {
                 tweakunits: [
-                    '~lua/tweakunits1.lua',
-                    '~lua/tweakunits2.lua',
-                    '~lua/tweakunits3.lua',
+                    '~lua/evocom-leg.lua',
+                    '~lua/evocom-arm.lua',
+                    '~lua/evocom-cor.lua',
                 ],
             },
             false: undefined,
@@ -124,40 +124,40 @@ export const CONFIGURATION_MAPPING: ValueMapping = {
     enemyHealth: {
         description: 'Enemy health multiplier',
         values: {
-            '1.3x': { tweakdefs: ['~lua/tweakdefs/raptor hp 1.3X.lua'] },
-            '1.5x': { tweakdefs: ['~lua/tweakdefs/raptor hp 1.5X.lua'] },
-            '1.7x': { tweakdefs: ['~lua/tweakdefs/raptor hp 1.7X.lua'] },
-            '2.0x': { tweakdefs: ['~lua/tweakdefs/raptor hp 2.0X.lua'] },
-            '2.5x': { tweakdefs: ['~lua/tweakdefs/raptor hp 2.5X.lua'] },
-            '3.0x': { tweakdefs: ['~lua/tweakdefs/raptor hp 3.0X.lua'] },
-            '4.0x': { tweakdefs: ['~lua/tweakdefs/raptor hp 4.0X.lua'] },
-            '5.0x': { tweakdefs: ['~lua/tweakdefs/raptor hp 5.0X.lua'] },
+            '1.3x': { tweakdefs: ['~lua/raptor-hp/raptor-hp-1.3x.lua'] },
+            '1.5x': { tweakdefs: ['~lua/raptor-hp/raptor-hp-1.5x.lua'] },
+            '1.7x': { tweakdefs: ['~lua/raptor-hp/raptor-hp-1.7x.lua'] },
+            '2.0x': { tweakdefs: ['~lua/raptor-hp/raptor-hp-2.0x.lua'] },
+            '2.5x': { tweakdefs: ['~lua/raptor-hp/raptor-hp-2.5x.lua'] },
+            '3.0x': { tweakdefs: ['~lua/raptor-hp/raptor-hp-3.0x.lua'] },
+            '4.0x': { tweakdefs: ['~lua/raptor-hp/raptor-hp-4.0x.lua'] },
+            '5.0x': { tweakdefs: ['~lua/raptor-hp/raptor-hp-5.0x.lua'] },
         },
     },
     bossHealth: {
         description: 'Boss health multiplier',
         values: {
-            '1.3x': { tweakdefs: ['~lua/tweakdefs1/queen hp 01 1.3X.lua'] },
-            '1.5x': { tweakdefs: ['~lua/tweakdefs1/queen hp 02 1.5X.lua'] },
-            '1.7x': { tweakdefs: ['~lua/tweakdefs1/queen hp 03 1.7X.lua'] },
-            '2.0x': { tweakdefs: ['~lua/tweakdefs1/queen hp 04 2.0X.lua'] },
-            '2.5x': { tweakdefs: ['~lua/tweakdefs1/queen hp 04 2.5X.lua'] },
-            '3.0x': { tweakdefs: ['~lua/tweakdefs1/queen hp 05 3.0X.lua'] },
-            '4.0x': { tweakdefs: ['~lua/tweakdefs1/queen hp 06 4.0X.lua'] },
-            '5.0x': { tweakdefs: ['~lua/tweakdefs1/queen hp 07 5.0X.lua'] },
-            '7.0x': { tweakdefs: ['~lua/tweakdefs1/queen hp 08 7.0X.lua'] },
-            '9.0x': { tweakdefs: ['~lua/tweakdefs1/queen hp 09 9.0X.lua'] },
-            '11.0x': { tweakdefs: ['~lua/tweakdefs1/queen hp 10 11.0X.lua'] },
-            '13.0x': { tweakdefs: ['~lua/tweakdefs1/queen hp 11 13.0X.lua'] },
+            '1.3x': { tweakdefs: ['~lua/queen-hp/queen-hp-1.3x.lua'] },
+            '1.5x': { tweakdefs: ['~lua/queen-hp/queen-hp-1.5x.lua'] },
+            '1.7x': { tweakdefs: ['~lua/queen-hp/queen-hp-1.7x.lua'] },
+            '2.0x': { tweakdefs: ['~lua/queen-hp/queen-hp-2.0x.lua'] },
+            '2.5x': { tweakdefs: ['~lua/queen-hp/queen-hp-2.5x.lua'] },
+            '3.0x': { tweakdefs: ['~lua/queen-hp/queen-hp-3.0x.lua'] },
+            '4.0x': { tweakdefs: ['~lua/queen-hp/queen-hp-4.0x.lua'] },
+            '5.0x': { tweakdefs: ['~lua/queen-hp/queen-hp-5.0x.lua'] },
+            '7.0x': { tweakdefs: ['~lua/queen-hp/queen-hp-7.0x.lua'] },
+            '9.0x': { tweakdefs: ['~lua/queen-hp/queen-hp-9.0x.lua'] },
+            '11.0x': { tweakdefs: ['~lua/queen-hp/queen-hp-11.0x.lua'] },
+            '13.0x': { tweakdefs: ['~lua/queen-hp/queen-hp-13.0x.lua'] },
         },
     },
     extras: {
-        description: 'Mini Bosses',
+        description: 'Extra challenges',
         values: {
             None: undefined,
-            'Mini Bosses': { tweakdefs: ['~lua/tweakdefs4.lua'] },
+            'Mini Bosses': { tweakdefs: ['~lua/mini-bosses.lua'] },
             'Experimental Wave Challenge': {
-                tweakunits: ['~lua/tweakunits5.lua'],
+                tweakunits: ['~lua/wave-challenge.lua'],
             },
         },
     },
@@ -313,56 +313,56 @@ export const CONFIGURATION_MAPPING: ValueMapping = {
     isCrossFactionT2: {
         description: 'Cross-faction T2 labs',
         values: {
-            true: { tweakdefs: ['~lua/tweakdefs6.lua'] },
+            true: { tweakdefs: ['~lua/cross-faction-t2.lua'] },
             false: undefined,
         },
     },
     isT3Eco: {
         description: 'T3 Economy buildings',
         values: {
-            true: { tweakdefs: ['~lua/tweakdefs7.lua'] },
+            true: { tweakdefs: ['~lua/eco-t3.lua'] },
             false: undefined,
         },
     },
     isT3Builders: {
         description: 'T3 Builder aides',
         values: {
-            true: { tweakdefs: ['~lua/tweakdefs8.lua'] },
+            true: { tweakdefs: ['~lua/builders-t3.lua'] },
             false: undefined,
         },
     },
     isUnitLaunchers: {
         description: 'Unit Launchers',
         values: {
-            true: { tweakdefs: ['~lua/tweakdefs9.lua'] },
+            true: { tweakdefs: ['~lua/unit-launchers.lua'] },
             false: undefined,
         },
     },
     isLrpcRebalance: {
         description: 'LRPC Rebalance',
         values: {
-            true: { tweakunits: ['~lua/tweakunits6.lua'] },
+            true: { tweakunits: ['~lua/lrpc-rebalance.lua'] },
             false: undefined,
         },
     },
     isT4Defences: {
         description: 'T4 Defences',
         values: {
-            true: { tweakdefs: ['~lua/tweakdefs3.lua'] },
+            true: { tweakdefs: ['~lua/defences-t4.lua'] },
             false: undefined,
         },
     },
     isT4AirRework: {
         description: 'T4 Air Rework',
         values: {
-            true: { tweakunits: ['~lua/tweakunits7.lua'] },
+            true: { tweakunits: ['~lua/air-rework-t4.lua'] },
             false: undefined,
         },
     },
     isMegaNuke: {
         description: 'Mega Nuke',
         values: {
-            true: { tweakunits: ['~lua/tweakunits4.lua'] },
+            true: { tweakunits: ['~lua/mega-nuke.lua'] },
             false: undefined,
         },
     },
