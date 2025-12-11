@@ -21,7 +21,7 @@ function getGitSha(): string {
 const isGitHubPages = process.env.GITHUB_PAGES === 'true';
 
 /** Base path for GitHub Pages subdirectory deployment */
-const BASE_PATH = '/NuttyB-Raptors';
+const BASE_PATH = '/NuttyB';
 
 const nextConfig: NextConfig = {
     /* config options here */
@@ -32,7 +32,7 @@ const nextConfig: NextConfig = {
     },
     // Static export for GitHub Pages
     output: 'export',
-    // Deployed to: https://bar-nuttyb-collective.github.io/configurator
+    // Deployed to: https://bar-nuttyb-collective.github.io/NuttyB
     basePath: isGitHubPages ? BASE_PATH : '',
     // Disable image optimization (not supported in static export)
     images: {
