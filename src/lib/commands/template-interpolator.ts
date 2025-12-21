@@ -3,7 +3,6 @@
  *
  * Supports extended reference syntax: ~lua/file.lua{VAR1=value1,VAR2=value2}
  * Replaces $VARIABLE_NAME$ placeholders in templates with actual values.
- * Evaluates simple Lua arithmetic expressions for dynamic calculations.
  */
 
 export interface ParsedReference {
@@ -69,70 +68,9 @@ function parseReference(ref: string): ParsedReference | null {
 }
 
 /**
- * Safely evaluates a simple arithmetic expression.
- *
- * Only allows: numbers, operators (+, -, *, /), parentheses, and whitespace.
- * Uses a safe expression parser instead of eval for security.
- *
- * @param expression The arithmetic expression to evaluate
- * @returns Evaluated result as string, or original expression if evaluation fails
- *
- * @example
- * evaluateExpression('0.75 / 1.5')  // Returns: '0.5'
- * evaluateExpression('2 * 3 + 1')   // Returns: '7'
- * evaluateExpression('malicious()')  // Returns: 'malicious()' (unchanged, logged warning)
- */
-function evaluateExpression(expression: string): string {
-    // Safety check: only allow numbers, operators, parentheses, dots, and whitespace
-    if (!/^[\d\s+\-*/().]+$/.test(expression)) {
-        console.warn(
-            `Unsafe expression detected, skipping evaluation: ${expression}`
-        );
-        return expression;
-    }
-
-    try {
-        // Safe manual parsing for simple arithmetic
-        // Only handles division for now (primary use case: 0.75 / HP_MULTIPLIER)
-        const trimmed = expression.trim();
-
-        // Handle division: "0.75 / 1.5"
-        if (trimmed.includes('/')) {
-            const parts = trimmed
-                .split('/')
-                .map((p) => Number.parseFloat(p.trim()));
-            if (parts.length === 2 && parts.every((p) => !Number.isNaN(p))) {
-                const result = parts[0] / parts[1];
-                return result.toString();
-            }
-        }
-
-        // Handle multiplication: "2 * 3"
-        if (trimmed.includes('*')) {
-            const parts = trimmed
-                .split('*')
-                .map((p) => Number.parseFloat(p.trim()));
-            if (parts.length === 2 && parts.every((p) => !Number.isNaN(p))) {
-                const result = parts[0] * parts[1];
-                return result.toString();
-            }
-        }
-
-        console.warn(
-            `Expression format not supported for evaluation: ${expression}`
-        );
-        return expression;
-    } catch (error) {
-        console.warn(`Failed to evaluate expression: ${expression}`, error);
-        return expression;
-    }
-}
-
-/**
  * Interpolates template placeholders with variable values.
  *
  * Replaces $VARIABLE_NAME$ with corresponding values from variables object.
- * Supports Lua expression evaluation for dynamic calculations.
  *
  * @param template The template string with $PLACEHOLDER$ markers
  * @param variables Object mapping variable names to values
@@ -144,12 +82,6 @@ function evaluateExpression(expression: string): string {
  *   { HP_MULTIPLIER: '1.5' }
  * )
  * // Returns: 'unitDef.health = unitDef.health * 1.5'
- *
- * interpolateTemplate(
- *   'unitDef.metalcost = math.floor(unitDef.health * (0.75 / $HP_MULTIPLIER$))',
- *   { HP_MULTIPLIER: '1.5' }
- * )
- * // Returns: 'unitDef.metalcost = math.floor(unitDef.health * (0.5))'
  */
 function interpolateTemplate(
     template: string,
@@ -158,8 +90,8 @@ function interpolateTemplate(
     // Track which variables were actually used
     const usedVariables = new Set<string>();
 
-    // First pass: Replace all $VARIABLE$ placeholders
-    let interpolated = template.replaceAll(
+    // Replace all $VARIABLE$ placeholders
+    const interpolated = template.replaceAll(
         /\$(\w+)\$/g,
         (match, varName: string) => {
             if (varName in variables) {
@@ -171,20 +103,6 @@ function interpolateTemplate(
                 `Undefined template variable: ${varName} (placeholder: ${match})`
             );
             return match; // Keep placeholder if variable not found
-        }
-    );
-
-    // Second pass: Evaluate arithmetic expressions in parentheses
-    // Matches patterns like (0.75 / 1.5) that resulted from variable substitution
-    interpolated = interpolated.replaceAll(
-        /\(([^()]+)\)/g,
-        (match, expression: string) => {
-            // Only evaluate if expression contains arithmetic operators
-            if (/[+\-*/]/.test(expression)) {
-                const evaluated = evaluateExpression(expression);
-                return `(${evaluated})`;
-            }
-            return match;
         }
     );
 
@@ -210,7 +128,8 @@ function interpolateTemplate(
  *
  * @param ref The Lua file reference (with optional template variables)
  * @param luaFileMap Map of file paths to Lua source code (from bundle)
- * @returns Interpolated Lua source code, or null if file not found/error occurred
+ * @returns Interpolated Lua source code
+ * @throws Error if reference is malformed or file not found in bundle
  *
  * @example
  * processLuaReference(
@@ -222,11 +141,11 @@ function interpolateTemplate(
 export function processLuaReference(
     ref: string,
     luaFileMap: Map<string, string>
-): string | null {
+): string {
     // Parse the reference
     const parsed = parseReference(ref);
     if (!parsed) {
-        return null;
+        throw new Error(`Failed to parse Lua reference: ${ref}`);
     }
 
     const { filePath, variables } = parsed;
@@ -234,10 +153,9 @@ export function processLuaReference(
     // Load template/file from bundle
     const template = luaFileMap.get(filePath);
     if (!template) {
-        console.warn(
+        throw new Error(
             `Lua file not found in bundle: ${filePath} (from reference: ${ref})`
         );
-        return null;
     }
 
     // If no variables, return template as-is

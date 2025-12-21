@@ -26,7 +26,7 @@ function UnitDef_Post(unitID, unitDef)
     if unitDef.customparams and unitDef.customparams.subfolder == "other/raptors" then
         unitDef.nochasecategory = "OBJECT"
         if unitDef.metalcost and unitDef.health then
-            unitDef.metalcost = math.floor(unitDef.health * (0.75 / $HP_MULTIPLIER$))
+            unitDef.metalcost = math.floor(unitDef.health * 0.75 / $HP_MULTIPLIER$)
         end
     end
 end

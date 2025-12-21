@@ -99,24 +99,20 @@ export function buildLobbySections(
     // Always include always-enabled tweaks (with paths for priority lookup)
     for (const path of BASE_TWEAKS.tweakdefs) {
         const luaContent = processLuaReference(path, luaFileMap);
-        if (luaContent) {
-            tweakdefsSources.push({
-                path,
-                content: luaContent.trim(),
-                priority: getLuaFilePriority(path),
-            });
-        }
+        tweakdefsSources.push({
+            path,
+            content: luaContent.trim(),
+            priority: getLuaFilePriority(path),
+        });
     }
 
     for (const path of BASE_TWEAKS.tweakunits) {
         const luaContent = processLuaReference(path, luaFileMap);
-        if (luaContent) {
-            tweakunitsSources.push({
-                path,
-                content: luaContent.trim(),
-                priority: getLuaFilePriority(path),
-            });
-        }
+        tweakunitsSources.push({
+            path,
+            content: luaContent.trim(),
+            priority: getLuaFilePriority(path),
+        });
     }
 
     // Process each configuration option
@@ -144,11 +140,6 @@ export function buildLobbySections(
 
             for (const path of paths) {
                 const luaContent = processLuaReference(path, luaFileMap);
-
-                if (!luaContent) {
-                    continue;
-                }
-
                 const source: LuaSourceWithMetadata = {
                     path,
                     content: luaContent.trim(),
