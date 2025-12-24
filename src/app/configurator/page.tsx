@@ -25,6 +25,7 @@ export default function Page() {
         sections,
         slotUsage,
         error: tweakError,
+        droppedTweaks,
     } = useTweakData(configuration, luaFiles, enabledCustomTweaks);
 
     const isLoading = isLuaLoading || isConfigLoading || isTweaksLoading;
@@ -37,6 +38,7 @@ export default function Page() {
             sections={sections}
             slotUsage={slotUsage}
             error={tweakError}
+            droppedTweaks={droppedTweaks}
         >
             <Stack gap='xl'>
                 <Configurator />

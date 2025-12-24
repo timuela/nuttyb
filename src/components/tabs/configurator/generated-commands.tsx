@@ -7,6 +7,7 @@ import {
     Button,
     Flex,
     Group,
+    List,
     Stack,
     Text,
     Textarea,
@@ -53,7 +54,7 @@ function CopySection({ content, label }: CopySectionProps) {
 }
 
 const GeneratedCommands: React.FC = () => {
-    const { sections, slotUsage, error } = useTweakDataContext();
+    const { sections, slotUsage, droppedTweaks, error } = useTweakDataContext();
 
     // Hide section entirely when no commands
     if (sections.length === 0 && !error) {
@@ -80,6 +81,26 @@ const GeneratedCommands: React.FC = () => {
             {error && (
                 <Alert color='red' title='Command Generation Error'>
                     {error}
+                </Alert>
+            )}
+
+            {droppedTweaks.length > 0 && (
+                <Alert color='orange' title='Some tweaks were not included'>
+                    <Text size='sm'>
+                        No slots available for the following tweaks:
+                    </Text>
+                    <List>
+                        {droppedTweaks.map((t, i) => (
+                            <List.Item key={i}>
+                                <Text size='sm'>
+                                    <strong>{t.description}</strong> ({t.type})
+                                </Text>
+                            </List.Item>
+                        ))}
+                    </List>
+                    <Text size='sm' mt='sm'>
+                        Disable some other tweaks to free up slots.
+                    </Text>
                 </Alert>
             )}
 

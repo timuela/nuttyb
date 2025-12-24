@@ -1,5 +1,14 @@
 import React, { createContext, useContext } from 'react';
 
+/**
+ * Minimal display type for dropped custom tweaks.
+ * Contains only the fields needed for UI display.
+ */
+export interface DroppedTweak {
+    description: string;
+    type: 'tweakdefs' | 'tweakunits';
+}
+
 interface TweakDataContext {
     sections: string[];
     slotUsage?: {
@@ -7,6 +16,7 @@ interface TweakDataContext {
         tweakunits: { used: number; total: number };
     };
     error?: string;
+    droppedTweaks: DroppedTweak[];
 }
 
 const TweakDataContext = createContext<TweakDataContext | undefined>(undefined);
@@ -30,10 +40,18 @@ export function TweakDataProvider({
     sections,
     slotUsage,
     error,
+    droppedTweaks,
     children,
 }: TweakDataProviderProps) {
     return (
-        <TweakDataContext.Provider value={{ sections, slotUsage, error }}>
+        <TweakDataContext.Provider
+            value={{
+                sections,
+                slotUsage,
+                error,
+                droppedTweaks,
+            }}
+        >
             {children}
         </TweakDataContext.Provider>
     );

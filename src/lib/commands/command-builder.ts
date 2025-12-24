@@ -24,6 +24,7 @@ export interface LobbySectionsResult {
         tweakdefs: { used: number; total: number };
         tweakunits: { used: number; total: number };
     };
+    droppedCustomTweaks: EnabledCustomTweak[];
 }
 
 /**
@@ -172,10 +173,12 @@ export function buildLobbySections(
     ];
 
     // Generate custom tweak commands with dynamic slot allocation (still 1:1)
-    const customTweakCommands = allocateCustomTweakSlots(
+    const customTweakResult = allocateCustomTweakSlots(
         standardBsetCommands,
         customTweaks
     );
+    const customTweakCommands = customTweakResult.commands;
+    const droppedCustomTweaks = customTweakResult.droppedCustomTweaks;
 
     // Generate rename command
     const renameCommand = buildRenameCommand(configuration);
@@ -205,6 +208,7 @@ export function buildLobbySections(
                 tweakdefs: tweakdefsResult.slotUsage,
                 tweakunits: tweakunitsResult.slotUsage,
             },
+            droppedCustomTweaks,
         };
     }
 
@@ -243,5 +247,6 @@ export function buildLobbySections(
             tweakdefs: tweakdefsResult.slotUsage,
             tweakunits: tweakunitsResult.slotUsage,
         },
+        droppedCustomTweaks,
     };
 }

@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 
+import type { DroppedTweak } from '@/components/contexts/tweak-data-context';
 import { buildLobbySections } from '@/lib/commands/command-builder';
 import type { EnabledCustomTweak } from '@/lib/commands/custom-tweaks';
 import type { Configuration } from '@/lib/configuration';
@@ -14,6 +15,7 @@ export interface UseTweakDataReturn {
         tweakunits: { used: number; total: number };
     };
     error?: string;
+    droppedTweaks: DroppedTweak[];
 }
 
 export function useTweakData(
@@ -23,20 +25,31 @@ export function useTweakData(
 ): UseTweakDataReturn {
     const result = useMemo<UseTweakDataReturn>(() => {
         if (luaFiles.length === 0) {
-            return { sections: [] };
+            return { sections: [], droppedTweaks: [] };
         }
 
         try {
-            const { sections, slotUsage } = buildLobbySections(
-                configuration,
-                luaFiles,
-                enabledCustomTweaks
+            const { sections, slotUsage, droppedCustomTweaks } =
+                buildLobbySections(
+                    configuration,
+                    luaFiles,
+                    enabledCustomTweaks
+                );
+
+            // Transform business type to display type
+            const droppedTweaks: DroppedTweak[] = droppedCustomTweaks.map(
+                (tweak) => ({
+                    description: tweak.description,
+                    type: tweak.type,
+                })
             );
-            return { sections, slotUsage };
+
+            return { sections, slotUsage, droppedTweaks };
         } catch (error) {
             console.error('[useTweakData] Failed to build commands:', error);
             return {
                 sections: [],
+                droppedTweaks: [],
                 error:
                     error instanceof Error
                         ? error.message

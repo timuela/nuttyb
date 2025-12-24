@@ -28,6 +28,14 @@ interface LuaSourceWithMetadata {
 }
 
 /**
+ * Result of allocating custom tweak slots.
+ */
+export interface CustomTweakAllocationResult {
+    commands: string[];
+    droppedCustomTweaks: EnabledCustomTweak[];
+}
+
+/**
  * Allocates slots for custom tweaks and generates !bset commands.
  *
  * Custom tweaks are pre-encoded Base64URL strings, so we just need to
@@ -35,28 +43,28 @@ interface LuaSourceWithMetadata {
  *
  * @param existingCommands Array of existing !bset commands to analyze for used slots
  * @param customTweaks Optional array of enabled custom tweaks
- * @returns Array of !bset commands for custom tweaks
+ * @returns Commands and tweaks that couldn't be allocated
  */
 export function allocateCustomTweakSlots(
     existingCommands: string[],
     customTweaks?: EnabledCustomTweak[]
-): string[] {
+): CustomTweakAllocationResult {
     if (!customTweaks || customTweaks.length === 0) {
-        return [];
+        return { commands: [], droppedCustomTweaks: [] };
     }
 
     // Calculate which slots are already used by standard tweaks
     const slotUsage: SlotUsage = calculateUsedSlots(existingCommands);
 
     const customCommands: string[] = [];
+    const droppedCustomTweaks: EnabledCustomTweak[] = [];
 
     for (const tweak of customTweaks) {
         const slot = findFirstAvailableSlot(slotUsage, tweak.type);
 
         if (slot === null) {
-            console.warn(
-                `No available slot for custom tweak "${tweak.description}" (${tweak.type}). All slots are occupied.`
-            );
+            // Collect the tweak instead of console.warn
+            droppedCustomTweaks.push(tweak);
             continue;
         }
 
@@ -70,7 +78,7 @@ export function allocateCustomTweakSlots(
         customCommands.push(command);
     }
 
-    return customCommands;
+    return { commands: customCommands, droppedCustomTweaks };
 }
 
 /**
