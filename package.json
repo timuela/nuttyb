@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "sync": "bun run scripts/sync/sync.ts",
-        "bundle-test": "bun run scripts/bundle-test/bundle-test.ts",
+        "bundle-report": "bun run scripts/bundle-report/bundle-report.ts",
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
@@ -25,6 +25,7 @@
     },
     "devDependencies": {
         "@tailwindcss/postcss": "^4",
+        "@types/bun": "^1.3.5",
         "@types/command-line-args": "^5.2.3",
         "@types/command-line-usage": "^5.0.4",
         "@types/node": "^24.10.2",
