@@ -12,7 +12,7 @@ import {
     Title,
 } from '@mantine/core';
 
-import { decode, encode } from '@/lib/base64';
+import { decode, encode } from '@/lib/encoders/base64';
 
 type Mode = 'encode' | 'decode';
 

@@ -9,8 +9,8 @@ import PageLoader from '@/components/page-loader';
 import DataPreview from '@/components/tabs/data/data-preview';
 import FileList from '@/components/tabs/data/file-list';
 import TypeBadge from '@/components/tabs/data/type-badge';
-import { encode } from '@/lib/base64';
-import { CONFIGURATION_MAPPING } from '@/lib/data/configuration-mapping';
+import { CONFIGURATION_MAPPING } from '@/lib/command-generator/data/configuration-mapping';
+import { encode } from '@/lib/encoders/base64';
 import type { LuaFile, TweakType } from '@/types/types';
 
 interface ConfigValueEntry {

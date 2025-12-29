@@ -75,7 +75,7 @@ export default defineConfig(
             // Global rules applied to all files
             'prettier/prettier': 'warn',
             'linebreak-style': ['error', 'unix'],
-            quotes: ['error', 'single'],
+            quotes: ['error', 'single', { avoidEscape: true }],
             semi: ['error', 'always'],
             '@typescript-eslint/no-floating-promises': 'error',
             '@typescript-eslint/restrict-template-expressions': 'off',

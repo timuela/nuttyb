@@ -3,9 +3,9 @@
 import { useMemo } from 'react';
 
 import type { DroppedTweak } from '@/components/contexts/tweak-data-context';
-import { buildLobbySections } from '@/lib/commands/command-builder';
-import type { EnabledCustomTweak } from '@/lib/commands/custom-tweaks';
-import type { Configuration } from '@/lib/configuration';
+import type { EnabledCustomTweak } from '@/lib/command-generator/command-generator';
+import { generateCommandSections } from '@/lib/command-generator/command-generator';
+import type { Configuration } from '@/lib/command-generator/data/configuration';
 import type { LuaFile } from '@/types/types';
 
 export interface UseTweakDataReturn {
@@ -30,7 +30,7 @@ export function useTweakData(
 
         try {
             const { sections, slotUsage, droppedCustomTweaks } =
-                buildLobbySections(
+                generateCommandSections(
                     configuration,
                     luaFiles,
                     enabledCustomTweaks

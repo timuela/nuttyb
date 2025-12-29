@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 
+// import { minify } from '@/lib/lua-minificator';
 import type { LuaFile } from '@/types/types';
 
 import {
@@ -10,7 +11,6 @@ import { fetchLua as fetchLuaFromLocal } from './connectors/source-local';
 import { deleteData, getSavedBundle, saveBundle } from './connectors/target';
 import { getHelpText, parseCliArgs } from './utils/command-line-input';
 import { log } from './utils/logger';
-import { minify } from './utils/minificator';
 
 // Default GitHub repository to pull from
 export const REPO_OWNER = 'BAR-NuttyB-collective' as const;
@@ -66,10 +66,11 @@ async function main() {
             sha: commitHashSource,
             files: fileData.map((file) => {
                 // Minificator will fail to parse templates due to syntax errors, so skip them
-                const isTemplate = file.path.endsWith('-template.lua');
+                // const isTemplate = file.path.endsWith('-template.lua');
                 return {
                     path: file.path,
-                    data: isTemplate ? file.data : minify(file.data),
+                    // data: isTemplate ? file.data : minify(file.data),
+                    data: file.data,
                 };
             }),
         };

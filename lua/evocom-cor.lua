@@ -1,7 +1,9 @@
 --NuttyB v1.52c Cortex Com
 -- Authors: ChrispyNut, BackBash
 -- bar-nuttyb-collective.github.io/configurator
-return {
+
+-- EVOCOM_COR_START
+{
     corcom = {
         customparams = {
             evolution_target = 'corcomlvl2',
@@ -570,3 +572,4 @@ return {
         },
     },
 }
+-- EVOCOM_COR_END

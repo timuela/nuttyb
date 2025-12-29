@@ -5,7 +5,12 @@ import React from 'react';
 import { NativeSelect, Stack, TextInput, Title } from '@mantine/core';
 
 import { useConfiguratorContext } from '@/components/contexts/configurator-context';
-import { GameMap, MAPS, START_OPTIONS, StartOption } from '@/lib/configuration';
+import {
+    GameMap,
+    MAPS,
+    START_OPTIONS,
+    StartOption,
+} from '@/lib/command-generator/data/configuration';
 
 const GeneralSection: React.FC = () => {
     const { configuration, setProperty } = useConfiguratorContext();

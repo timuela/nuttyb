@@ -1,7 +1,9 @@
 --NuttyB v1.52c Armada Com
 -- Authors: ChrispyNut, BackBash
 -- bar-nuttyb-collective.github.io/configurator
-return {
+
+-- EVOCOM_ARM_START
+{
     armcom = {
         customparams = {
             evolution_target = 'armcomlvl2',
@@ -663,3 +665,4 @@ return {
         },
     },
 }
+-- EVOCOM_ARM_END

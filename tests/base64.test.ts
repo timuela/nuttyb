@@ -4,7 +4,7 @@
 
 import { describe, expect, test } from 'bun:test';
 
-import { decode, encode } from '@/lib/base64';
+import { decode, encode } from '@/lib/encoders/base64';
 
 const TEST_STRING =
     'The quick brown fox jumps over the lazy dog. 1234567890!@#$%^&*()_+-=[]{}|;:\'",.<>/?`~';

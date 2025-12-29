@@ -1,8 +1,13 @@
 --NuttyB T4 Air rework
 -- Authors: BackBash
 -- bar-nuttyb-collective.github.io/configurator
-return {
-    legfortt4 = {
+
+-- T4_AIR_START
+do
+    local unitDefs = UnitDefs or {}
+    local merge = table.mergeInPlace or table.merge
+
+    local payload = {
         customparams = {
             i18n_en_humanname = 'Experimental Tyrannus',
             i18n_en_tooltip = 'In dedication to our commander Tyrannus',
@@ -155,5 +160,11 @@ return {
                 onlytargetcategory = 'SURFACE',
             },
         },
-    },
-}
+    }
+
+    if unitDefs.legfortt4 then
+        merge(unitDefs.legfortt4, payload)
+    else
+        unitDefs.legfortt4 = payload
+    end
+end

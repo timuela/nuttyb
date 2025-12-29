@@ -6,7 +6,10 @@ import { Flex, List, Radio, Stack, Text, Title } from '@mantine/core';
 
 import { useConfiguratorContext } from '@/components/contexts/configurator-context';
 import { useCustomTweaksContext } from '@/components/contexts/custom-tweaks-context';
-import { PRESET_DIFFICULTIES, PresetDifficulty } from '@/lib/configuration';
+import {
+    PRESET_DIFFICULTIES,
+    PresetDifficulty,
+} from '@/lib/command-generator/data/configuration';
 
 const PRESET_DETAILS: Record<
     PresetDifficulty,

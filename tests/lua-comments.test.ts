@@ -4,7 +4,10 @@
 
 import { describe, expect, test } from 'bun:test';
 
-import { extractTopComments, stripCommentPrefix } from '@/lib/lua-comments';
+import {
+    extractTopComments,
+    stripCommentPrefix,
+} from '@/lib/lua-utils/comment-handler';
 
 const CODE_WITH_COMMENTS = [
     '-- Comment 1',
@@ -25,10 +28,10 @@ const LINE_COMMENT_MULTIDASH = '--- Line comment';
 describe('Lua comment handling', () => {
     test('Top comments are extracted correctly', () => {
         const code = CODE_WITH_COMMENTS.join('\n');
-        const extracted = extractTopComments(code);
-        expect(extracted).toBeDefined();
+        const commentLines = extractTopComments(code);
+        expect(commentLines).toBeDefined();
 
-        const commentLines = extracted.split('\n');
+        console.log('Extracted comment lines:', commentLines);
         expect(commentLines.length).toEqual(4);
         expect(commentLines[0]).toBe(CODE_WITH_COMMENTS[0]);
         expect(commentLines[1]).toBe(CODE_WITH_COMMENTS[1]);

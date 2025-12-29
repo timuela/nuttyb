@@ -15,11 +15,8 @@ import {
 } from '@mantine/core';
 
 import { useCustomTweaksContext } from '@/components/contexts/custom-tweaks-context';
-import type { LuaTweakType } from '@/lib/commands/custom-tweaks';
-import {
-    LUA_TWEAK_TYPES,
-    validateBase64UrlTweak,
-} from '@/lib/commands/custom-tweaks';
+import { validateBase64UrlTweak } from '@/lib/command-generator/command-generator';
+import { LUA_TWEAK_TYPES, LuaTweakType } from '@/types/types';
 
 interface FormState {
     description: string;

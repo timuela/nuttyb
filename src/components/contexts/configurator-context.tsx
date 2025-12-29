@@ -2,15 +2,15 @@
 
 import React, { createContext, useCallback, useContext, useMemo } from 'react';
 
-import type { Configuration } from '@/lib/configuration';
+import { useLocalStorage } from '@/hooks/use-local-storage';
+import type { Configuration } from '@/lib/command-generator/data/configuration';
+import { CONFIGURATION_STORAGE_KEY } from '@/lib/configuration-storage/keys';
 import {
     createStoredConfiguration,
     getDefaultStoredConfiguration,
     StoredConfiguration,
     validateStoredConfiguration,
-} from '@/lib/storage/configuration-storage';
-import { CONFIGURATION_STORAGE_KEY } from '@/lib/storage/storage-keys';
-import { useLocalStorage } from '@/lib/storage/use-local-storage';
+} from '@/lib/configuration-storage/storage';
 
 interface ConfiguratorContextValue {
     configuration: Configuration;

@@ -8,7 +8,7 @@ import { describe, expect, test } from 'bun:test';
 import {
     BASE_TWEAKS,
     CONFIGURATION_MAPPING,
-} from '@/lib/data/configuration-mapping';
+} from '@/lib/command-generator/data/configuration-mapping';
 
 import { extractLuaReferences, getBundle } from './utils/bundle';
 

@@ -1,4 +1,4 @@
-import type { Configuration } from '../lib/configuration';
+import type { Configuration } from '../lib/command-generator/data/configuration';
 
 // Extract all possible values from Configuration properties
 export type ExtractValues<T> = T extends readonly (infer U)[]
@@ -16,7 +16,9 @@ export type StringifyBooleans<T> = T extends boolean ? `${T}` : T;
  * - 'tweakdefs': Lua code for tweakdefs slots
  * - 'tweakunits': Lua code for tweakunits slots
  */
-export type TweakType = 'tweakdefs' | 'tweakunits' | 'command';
+export const LUA_TWEAK_TYPES = ['tweakdefs', 'tweakunits'] as const;
+export type LuaTweakType = (typeof LUA_TWEAK_TYPES)[number];
+export type TweakType = (typeof LUA_TWEAK_TYPES)[number] | 'command';
 
 /**
  * A value that can produce any combination of output types.

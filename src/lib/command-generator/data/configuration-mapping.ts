@@ -1,28 +1,4 @@
-import type { ValueMapping } from '../../types/types';
-
-/**
- * Maximum length for a single command or paste section.
- * This is the BAR game client's chat input limit.
- */
-export const MAX_COMMAND_LENGTH = 51_000;
-
-/**
- * Maximum slots per tweak type (tweakdefs, tweakdefs1-9 = 10 slots).
- */
-export const MAX_SLOTS_PER_TYPE = 10;
-
-/**
- * Target size for packed Lua slots (allows multiple files per slot).
- * Provides buffer below MAX_COMMAND_LENGTH for Base64 encoding overhead.
- */
-export const TARGET_SLOT_SIZE = 12_000;
-
-/**
- * Maximum size for a single Lua slot's Base64 payload.
- * Set to accommodate large single files like evocom-leg.lua (~15KB after encoding).
- * Actual limit is MAX_COMMAND_LENGTH (51,000) which includes the !bset prefix.
- */
-export const MAX_SLOT_SIZE = 16_000;
+import type { ValueMapping } from '@/types/types';
 
 /**
  * Priority levels for Lua files (0 = highest priority, loads first).

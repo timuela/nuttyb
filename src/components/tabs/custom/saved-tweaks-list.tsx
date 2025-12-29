@@ -17,7 +17,7 @@ import {
 import { useClipboard } from '@mantine/hooks';
 
 import { useCustomTweaksContext } from '@/components/contexts/custom-tweaks-context';
-import type { CustomTweak } from '@/lib/commands/custom-tweaks';
+import type { CustomTweak } from '@/lib/command-generator/command-generator';
 
 interface TweakRowProps {
     tweak: CustomTweak;

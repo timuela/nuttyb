@@ -1,7 +1,9 @@
 --NuttyB v1.52 Units Main
 -- Authors: ChrispyNut, BackBash
 -- bar-nuttyb-collective.github.io/configurator
-return {
+
+-- MAIN_UNITS_START
+{
     cortron = {
         energycost = 42000,
         metalcost = 3600,
@@ -673,3 +675,4 @@ return {
         },
     },
 }
+-- MAIN_UNITS_END

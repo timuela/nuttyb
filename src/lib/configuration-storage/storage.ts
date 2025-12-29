@@ -1,4 +1,7 @@
-import { Configuration, DEFAULT_CONFIGURATION } from '@/lib/configuration';
+import {
+    Configuration,
+    DEFAULT_CONFIGURATION,
+} from '@/lib/command-generator/data/configuration';
 
 /**
  * Structure stored in localStorage for configuration.

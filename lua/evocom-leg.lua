@@ -1,7 +1,9 @@
 --NuttyB v1.52c Legion Com
 -- Authors: ChrispyNut, BackBash
 -- bar-nuttyb-collective.github.io/configurator
-return {
+
+-- EVOCOM_LEG_START
+{
     legcom = {
         energymake = 50,
         metalmake = 5,
@@ -740,3 +742,4 @@ return {
         },
     },
 }
+-- EVOCOM_LEG_END

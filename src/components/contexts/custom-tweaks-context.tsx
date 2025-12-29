@@ -2,13 +2,13 @@
 
 import React, { createContext, useCallback, useContext, useMemo } from 'react';
 
+import { useLocalStorage } from '@/hooks/use-local-storage';
 import type {
     CustomTweak,
     EnabledCustomTweak,
     LuaTweakType,
-} from '@/lib/commands/custom-tweaks';
-import { CUSTOM_TWEAKS_STORAGE_KEY } from '@/lib/storage/storage-keys';
-import { useLocalStorage } from '@/lib/storage/use-local-storage';
+} from '@/lib/command-generator/command-generator';
+import { CUSTOM_TWEAKS_STORAGE_KEY } from '@/lib/configuration-storage/keys';
 
 interface CustomTweaksContextValue {
     /** All saved custom tweaks */

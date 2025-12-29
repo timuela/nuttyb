@@ -1,6 +1,8 @@
 --NuttyB v1.52b Def Main
 -- Authors: ChrispyNut, BackBash
 -- bar-nuttyb-collective.github.io/configurator
+
+-- MAIN_DEFS_START
 local unitDefs, repulsor, pairs, tableMerge =
     UnitDefs or {}, 'repulsor', pairs, table.merge
 
@@ -556,3 +558,4 @@ function UnitDef_Post(unitID, unitDef)
         end
     end
 end
+-- MAIN_DEFS_END
