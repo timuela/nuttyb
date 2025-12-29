@@ -3,6 +3,10 @@
  *
  * Packs Lua files sequentially into slots while respecting size limits.
  * Sources must be pre-sorted by priority by the caller.
+ *
+ * For tweakunits: Plain table format files (starting with `{`) must each get
+ * their own slot because BAR's engine expects a single table per tweakunits slot.
+ * Executable code format files (using `do...end` blocks) can be merged together.
  */
 
 import { LuaTweakType } from '@/types/types';
@@ -11,6 +15,22 @@ import { MAX_CHUNK_SIZE, MAX_SLOT_SIZE, MAX_SLOTS_PER_TYPE } from './constants';
 import { formatSlotName } from './slot';
 import { encode } from '../encoders/base64';
 import { minify } from '../lua-utils/minificator';
+
+/**
+ * Detects if Lua content is a plain table format (starts with `{` after comments).
+ * Plain table tweakunits cannot be merged - each needs its own slot.
+ *
+ * @param content Lua source content
+ * @returns true if content is plain table format
+ */
+function isPlainTableFormat(content: string): boolean {
+    // Strip leading comments and whitespace to find the first code character
+    const stripped = content
+        .replaceAll(/^(\s*--[^\n]*\n)*/g, '') // Remove leading comment lines
+        .trimStart();
+
+    return stripped.startsWith('{') || stripped.startsWith('return {');
+}
 
 /** Lua source with metadata for packing */
 export interface LuaSource {
@@ -58,6 +78,8 @@ function canFitInSlot(
 interface SlotBuilder {
     sources: string[];
     content: string;
+    /** If true, this slot contains a plain table and cannot accept more sources */
+    isPlainTable: boolean;
 }
 
 /**
@@ -82,19 +104,34 @@ export function packLuaSources(
     }
 
     const slots: SlotBuilder[] = [];
-    let currentSlot: SlotBuilder = { sources: [], content: '' };
+    let currentSlot: SlotBuilder = {
+        sources: [],
+        content: '',
+        isPlainTable: false,
+    };
 
     for (const source of sources) {
         const content = source.content;
+        const sourceIsPlainTable =
+            slotType === 'tweakunits' && isPlainTableFormat(content);
 
-        if (
+        // For tweakunits: plain table sources cannot be merged with anything
+        // - If current slot has a plain table, start a new slot
+        // - If new source is a plain table and current slot has content, start a new slot
+        const needsNewSlotForPlainTable =
+            currentSlot.isPlainTable ||
+            (sourceIsPlainTable && currentSlot.content);
+
+        const fitsInCurrentSlot =
+            !needsNewSlotForPlainTable &&
             canFitInSlot(
                 currentSlot.sources,
                 currentSlot.content,
                 source.path,
                 content
-            )
-        ) {
+            );
+
+        if (fitsInCurrentSlot) {
             // Source fits in current slot
             if (currentSlot.content) {
                 currentSlot.content += '\n\n' + content;
@@ -102,12 +139,20 @@ export function packLuaSources(
                 currentSlot.content = content;
             }
             currentSlot.sources.push(source.path);
+            // Mark slot as plain table if this source is one
+            if (sourceIsPlainTable) {
+                currentSlot.isPlainTable = true;
+            }
         } else {
-            // Source doesn't fit - start new slot
+            // Source doesn't fit or needs isolation - start new slot
             if (currentSlot.content) {
                 slots.push(currentSlot);
             }
-            currentSlot = { sources: [source.path], content };
+            currentSlot = {
+                sources: [source.path],
+                content,
+                isPlainTable: sourceIsPlainTable,
+            };
         }
     }
 

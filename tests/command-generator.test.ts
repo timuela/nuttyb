@@ -20,6 +20,7 @@ import {
     DEFAULT_LUA_PRIORITY,
     LUA_PRIORITIES,
 } from '@/lib/command-generator/data/configuration-mapping';
+import { LuaSource, packLuaSources } from '@/lib/command-generator/packer';
 import { decode } from '@/lib/encoders/base64';
 import {
     extractSourceManifest,
@@ -173,5 +174,117 @@ describe('Command generation', () => {
         for (const expectedTweak of expectedTweaks) {
             expect(tweaks).toContain(expectedTweak);
         }
+    });
+});
+
+describe('Tweakunits plain table isolation', () => {
+    test('Plain table tweakunits files get separate slots', () => {
+        // Plain table format - starts with { after comments
+        const plainTable1: LuaSource = {
+            path: 'lua/evocom-arm.lua',
+            content: `--NuttyB Armada Com
+{
+    armcom = { health = 5000 }
+}`,
+            priority: 1,
+        };
+
+        const plainTable2: LuaSource = {
+            path: 'lua/evocom-cor.lua',
+            content: `--NuttyB Cortex Com
+return {
+    corcom = { health = 5000 }
+}`,
+            priority: 1,
+        };
+
+        const result = packLuaSources([plainTable1, plainTable2], 'tweakunits');
+
+        // Each plain table should get its own slot
+        expect(result.commands.length).toBe(2);
+        expect(result.slotUsage.used).toBe(2);
+    });
+
+    test('Executable code tweakunits files can be merged', () => {
+        // Executable code format - uses do...end block
+        const execCode1: LuaSource = {
+            path: 'lua/lrpc-rebalance.lua',
+            content: `--NuttyB LRPC
+do
+    local unitDefs = UnitDefs or {}
+    table.mergeInPlace(unitDefs.armbrtha, { health = 13000 })
+end`,
+            priority: 6,
+        };
+
+        const execCode2: LuaSource = {
+            path: 'lua/air-rework-t4.lua',
+            content: `--NuttyB T4 Air
+do
+    local unitDefs = UnitDefs or {}
+    table.mergeInPlace(unitDefs.armfepoch, { speed = 100 })
+end`,
+            priority: 7,
+        };
+
+        const result = packLuaSources([execCode1, execCode2], 'tweakunits');
+
+        // Executable code files can be merged into one slot
+        expect(result.commands.length).toBe(1);
+        expect(result.slotUsage.used).toBe(1);
+    });
+
+    test('Mixed plain table and executable code get proper isolation', () => {
+        const plainTable: LuaSource = {
+            path: 'lua/main-units.lua',
+            content: `--NuttyB Main Units
+{
+    cortron = { health = 12000 }
+}`,
+            priority: 0,
+        };
+
+        const execCode: LuaSource = {
+            path: 'lua/lrpc-rebalance.lua',
+            content: `--NuttyB LRPC
+do
+    local unitDefs = UnitDefs or {}
+    table.mergeInPlace(unitDefs.armbrtha, { health = 13000 })
+end`,
+            priority: 6,
+        };
+
+        const result = packLuaSources([plainTable, execCode], 'tweakunits');
+
+        // Plain table gets its own slot, exec code gets another
+        expect(result.commands.length).toBe(2);
+        expect(result.slotUsage.used).toBe(2);
+    });
+
+    test('Tweakdefs files are not affected by plain table isolation', () => {
+        // Even if content looks like a plain table, tweakdefs should merge normally
+        const defs1: LuaSource = {
+            path: 'lua/defs1.lua',
+            content: `--Defs 1
+{
+    somedef = { value = 1 }
+}`,
+            priority: 1,
+        };
+
+        const defs2: LuaSource = {
+            path: 'lua/defs2.lua',
+            content: `--Defs 2
+{
+    otherdef = { value = 2 }
+}`,
+            priority: 1,
+        };
+
+        const result = packLuaSources([defs1, defs2], 'tweakdefs');
+
+        // Tweakdefs should merge regardless of format
+        expect(result.commands.length).toBe(1);
+        expect(result.slotUsage.used).toBe(1);
     });
 });
