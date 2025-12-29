@@ -2,7 +2,6 @@
 -- Authors: ChrispyNut, BackBash
 -- bar-nuttyb-collective.github.io/configurator
 
--- EVOCOM_COR_START
 {
     corcom = {
         customparams = {
@@ -572,4 +571,3 @@
         },
     },
 }
--- EVOCOM_COR_END

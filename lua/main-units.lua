@@ -2,7 +2,6 @@
 -- Authors: ChrispyNut, BackBash
 -- bar-nuttyb-collective.github.io/configurator
 
--- MAIN_UNITS_START
 {
     cortron = {
         energycost = 42000,
@@ -675,4 +674,3 @@
         },
     },
 }
--- MAIN_UNITS_END

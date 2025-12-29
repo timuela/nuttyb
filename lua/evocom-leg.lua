@@ -2,7 +2,6 @@
 -- Authors: ChrispyNut, BackBash
 -- bar-nuttyb-collective.github.io/configurator
 
--- EVOCOM_LEG_START
 {
     legcom = {
         energymake = 50,
@@ -742,4 +741,3 @@
         },
     },
 }
--- EVOCOM_LEG_END

@@ -2,7 +2,6 @@
 -- Authors: BackBash
 -- bar-nuttyb-collective.github.io/configurator
 
--- EXP_WAVE_START
 do
     local unitDefs = UnitDefs or {}
     local merge = table.mergeInPlace or table.merge
@@ -207,4 +206,3 @@ do
         },
     })
 end
--- EXP_WAVE_END

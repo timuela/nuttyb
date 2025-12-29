@@ -3,7 +3,6 @@
 -- The build options currently include 18 new unit launchers.
 -- Many T3 units and 9 launchers for T1-3 random units for each faction.
 
--- UNIT_LAUNCHERS_START
 do
     local UnitDefs, armbotrail = UnitDefs or {}, 'armbotrail'
     local NewUnits = {
@@ -339,4 +338,3 @@ do
         end
     end
 end
--- UNIT_LAUNCHERS_END

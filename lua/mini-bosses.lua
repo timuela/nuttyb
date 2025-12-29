@@ -2,7 +2,6 @@
 -- Authors: RCore
 -- bar-nuttyb-collective.github.io/configurator
 
--- MINI_BOSSES_START
 do
     local unitDefs, tableMerge, tableCopy, raptor_matriarch_basic, customfusionexplo, spring =
         UnitDefs or {},
@@ -427,4 +426,3 @@ do
         end
     end
 end
--- MINI_BOSSES_END

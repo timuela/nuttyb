@@ -2,7 +2,6 @@
 -- Authors: TetrisCo
 -- bar-nuttyb-collective.github.io/configurator
 
--- CROSS_FACTION_START
 do
     local unitDefs, tax, t2Factories, taxedT2Factories, unitI18N, _taxed, taxedTitlePostfix =
         UnitDefs or {},
@@ -60,4 +59,3 @@ do
 
     table.mergeInPlace(unitDefs, taxedT2Factories)
 end
--- CROSS_FACTION_END

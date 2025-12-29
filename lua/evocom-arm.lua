@@ -2,7 +2,6 @@
 -- Authors: ChrispyNut, BackBash
 -- bar-nuttyb-collective.github.io/configurator
 
--- EVOCOM_ARM_START
 {
     armcom = {
         customparams = {
@@ -665,4 +664,3 @@
         },
     },
 }
--- EVOCOM_ARM_END

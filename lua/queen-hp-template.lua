@@ -1,5 +1,6 @@
 --NuttyB v1.52 $HP_MULTIPLIER$X QHP
 -- bar-nuttyb-collective.github.io/configurator
+
 for b, c in pairs(UnitDefs) do
     if b:match('^raptor_queen_.*') then
         c.repairable = 0

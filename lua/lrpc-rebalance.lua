@@ -1,7 +1,6 @@
 --NuttyB lrpc rebalance v2
 -- bar-nuttyb-collective.github.io/configurator
 
--- LRPC_START
 do
     local unitDefs = UnitDefs or {}
 
@@ -61,4 +60,3 @@ do
         })
     end
 end
--- LRPC_END

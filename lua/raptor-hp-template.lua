@@ -1,5 +1,6 @@
 --NuttyB v1.52 $HP_MULTIPLIER$X HP
 -- bar-nuttyb-collective.github.io/configurator
+
 for unitName, unitDef in pairs(UnitDefs) do
     if string.sub(unitName, 1, 24) == 'raptor_land_swarmer_heal' then
         unitDef.reclaimspeed = 100

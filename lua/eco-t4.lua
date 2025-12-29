@@ -2,7 +2,6 @@
 -- Original author: `jackie188` on BAR (resurrected from base64)
 -- bar-nuttyb-collective.github.io/configurator
 
--- T4_ECO_START
 do
     local unitDefs = UnitDefs or {}
     local tableMerge = table.merge
@@ -29,20 +28,28 @@ do
         local isLegion = (faction == 'leg')
 
         -- Metal Maker base unit name differs for Legion
-        local metalMakerBase = isLegion and 'legadveconvt3' or (faction .. 'mmkrt3')
+        local metalMakerBase = isLegion and 'legadveconvt3'
+            or (faction .. 'mmkrt3')
         local metalMakerTaxed = metalMakerBase .. taxedSuffix
         local metalMakerDef = unitDefs[metalMakerBase]
 
         -- T3 Cold Energy Converter (taxed version)
         if metalMakerDef then
             cloneUnit(metalMakerBase, metalMakerTaxed, {
-                metalcost = math.ceil(metalMakerDef.metalcost * taxedMultiplier),
-                energycost = math.ceil(metalMakerDef.energycost * taxedMultiplier),
-                buildtime = math.ceil(metalMakerDef.buildtime * taxedMultiplier),
+                metalcost = math.ceil(
+                    metalMakerDef.metalcost * taxedMultiplier
+                ),
+                energycost = math.ceil(
+                    metalMakerDef.energycost * taxedMultiplier
+                ),
+                buildtime = math.ceil(
+                    metalMakerDef.buildtime * taxedMultiplier
+                ),
                 health = math.ceil(metalMakerDef.health * taxedMultiplier * 3),
                 customparams = {
                     energyconv_capacity = math.ceil(
-                        metalMakerDef.customparams.energyconv_capacity * taxedMultiplier
+                        metalMakerDef.customparams.energyconv_capacity
+                            * taxedMultiplier
                     ),
                     energyconv_efficiency = 0.021,
                     buildinggrounddecaldecayspeed = metalMakerDef.customparams.buildinggrounddecaldecayspeed,
@@ -143,11 +150,17 @@ do
         -- T3 Cold Fusion Reactor (taxed version)
         if fusionDef then
             cloneUnit(fusionBase, fusionTaxed, {
-                buildtime = math.ceil(fusionDef.buildtime * taxedMultiplier * 1.8),
+                buildtime = math.ceil(
+                    fusionDef.buildtime * taxedMultiplier * 1.8
+                ),
                 metalcost = 108000,
                 energycost = math.ceil(fusionDef.energycost * taxedMultiplier),
-                energymake = math.ceil(fusionDef.energymake * fusionEnergyMultiplier),
-                energystorage = math.ceil(fusionDef.energystorage * fusionEnergyMultiplier),
+                energymake = math.ceil(
+                    fusionDef.energymake * fusionEnergyMultiplier
+                ),
+                energystorage = math.ceil(
+                    fusionDef.energystorage * fusionEnergyMultiplier
+                ),
                 health = math.ceil(fusionDef.health * taxedMultiplier * 3),
                 buildpic = fusionDef.buildpic,
                 collisionvolumeoffsets = fusionDef.collisionvolumeoffsets,
@@ -186,7 +199,8 @@ do
                     techlevel = 3,
                     unitgroup = 'energy',
                     usebuildinggrounddecal = true,
-                    i18n_en_humanname = factionNames[faction] .. 'T3 Cold Fusion Reactor',
+                    i18n_en_humanname = factionNames[faction]
+                        .. 'T3 Cold Fusion Reactor',
                     i18n_en_tooltip = 'Produce 39000 Energy. Non-Explosive!',
                 },
                 sfxtypes = {
@@ -262,7 +276,8 @@ do
                     techlevel = 3,
                     unitgroup = 'energy',
                     usebuildinggrounddecal = true,
-                    i18n_en_humanname = factionNames[faction] .. 'T4 Cold Fusion Reactor',
+                    i18n_en_humanname = factionNames[faction]
+                        .. 'T4 Cold Fusion Reactor',
                     i18n_en_tooltip = 'Produce 72000 Energy! For the truly power-hungry. Non-Explosive!',
                 },
                 sfxtypes = {
@@ -313,8 +328,10 @@ do
             end
 
             for _, optionName in ipairs(newBuildOptions) do
-                aideGroundDef.buildoptions[#aideGroundDef.buildoptions + 1] = optionName
-                aideAirDef.buildoptions[#aideAirDef.buildoptions + 1] = optionName
+                aideGroundDef.buildoptions[#aideGroundDef.buildoptions + 1] =
+                    optionName
+                aideAirDef.buildoptions[#aideAirDef.buildoptions + 1] =
+                    optionName
             end
         end
     end
@@ -342,7 +359,8 @@ do
         end
 
         local isLegion = (faction == 'leg')
-        local metalMakerBase = isLegion and 'legadveconvt3' or (faction .. 'mmkrt3')
+        local metalMakerBase = isLegion and 'legadveconvt3'
+            or (faction .. 'mmkrt3')
 
         local newUnits = {
             metalMakerBase .. taxedSuffix,
@@ -358,4 +376,3 @@ do
         end
     end
 end
--- T4_ECO_END

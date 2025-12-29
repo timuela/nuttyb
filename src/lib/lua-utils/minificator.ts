@@ -1,9 +1,7 @@
 import luamin from 'lua-format';
 
 import {
-    extractMarkerComment,
     extractTopComments,
-    isMarkerLine,
     removeCommentsFromLine,
 } from '@/lib/lua-utils/comment-handler';
 
@@ -62,13 +60,7 @@ function minifyNonMinifiable(code: string): string {
         const processedLine = removeCommentsFromLine(line);
         const trimmed = processedLine.trim();
 
-        // Check if this line contains a marker comment (preserve with blank lines)
-        if (isMarkerLine(line)) {
-            if (processedLines.length > 0 && processedLines.at(-1) !== '') {
-                processedLines.push(''); // Blank line before marker
-            }
-            processedLines.push(extractMarkerComment(line), ''); // Blank line after marker
-        } else if (trimmed) {
+        if (trimmed) {
             // Only add non-empty lines
             processedLines.push(trimmed);
         }
@@ -77,24 +69,17 @@ function minifyNonMinifiable(code: string): string {
     // Join with newlines and compact whitespace within code lines
     let output = '';
     for (const line of processedLines) {
-        if (line === '') {
-            output += '\n';
-        } else if (isMarkerLine(line)) {
-            output += line + '\n';
-        } else {
-            // Compact whitespace within non-marker lines
-            output += compactWhitespaceInLine(line) + '\n';
-        }
+        output += line === '' ? '\n' : compactWhitespaceInLine(line) + '\n';
     }
 
     output = output.replaceAll('\n', '');
 
-    // // Clean up the result
-    // // Remove multiple blank lines, keep at most 1
-    // output = output.replaceAll(/\n\n\n+/g, '\n\n');
+    // Clean up the result
+    // Remove multiple blank lines, keep at most 1
+    output = output.replaceAll(/\n\n\n+/g, '\n\n');
 
-    // // Remove leading/trailing blank lines
-    // output = output.replaceAll(/^\n+|\n+$/g, '');
+    // Remove leading/trailing blank lines
+    output = output.trim();
 
     return output;
 }

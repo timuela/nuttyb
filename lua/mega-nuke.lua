@@ -1,7 +1,6 @@
 --NuttyB v1.52 Mega Nuke
 -- bar-nuttyb-collective.github.io/configurator
 
--- MEGA_NUKE_START
 do
     local UnitDefs = UnitDefs or {}
     local merge = table.mergeInPlace or table.merge
@@ -111,4 +110,3 @@ do
         },
     })
 end
--- MEGA_NUKE_END

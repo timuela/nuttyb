@@ -2,7 +2,6 @@
 -- Authors: Hedgehogzs
 -- bar-nuttyb-collective.github.io/configurator
 
--- LEGENDARY_PULSAR_START
 do
     local unitDefs, tableMerge, unitName =
         UnitDefs or {}, table.merge, 'armannit4'
@@ -95,9 +94,7 @@ do
         ensureBuildOption(builder_name, unitName)
     end
 end
--- LEGENDARY_PULSAR_END
 
--- LEGENDARY_BASTION_START
 do
     local unitDefs, tableMerge, unitName =
         UnitDefs or {}, table.merge, 'legbastiont4'
@@ -206,9 +203,7 @@ do
         ensureBuildOption(builder_name, unitName)
     end
 end
--- LEGENDARY_BASTION_END
 
--- LEGENDARY_BULWARK_START
 do
     local unitDefs, tableMerge, unitName =
         UnitDefs or {}, table.merge, 'legbastiont4'
@@ -390,4 +385,3 @@ do
         ensureBuildOption(builder_name, unitName)
     end
 end
--- LEGENDARY_BULWARK_END

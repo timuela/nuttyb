@@ -78,24 +78,3 @@ export function removeCommentsFromLine(line: string) {
 
     return result;
 }
-
-/**
- * Check if a line is a marker comment
- * @param line - Line to check
- * @returns True if line contains a marker comment
- */
-export function isMarkerLine(line: string): boolean {
-    // Only match actual marker comments (e.g., SECTION_START, SECTION_END)
-    return /--\s*[A-Z][A-Z0-9_]*_(START|END)/.test(line);
-}
-
-/**
- * Extract marker comment from a line (preserve section markers)
- * @param line - Line that contains marker
- * @returns Marker comment only
- */
-export function extractMarkerComment(line: string): string {
-    // Extract only actual marker patterns (e.g., RAGNAROK_START, SECTION_END)
-    const match = line.match(/--\s*([A-Z][A-Z0-9_]*_(START|END))/);
-    return match ? `-- ${match[1]}` : '';
-}

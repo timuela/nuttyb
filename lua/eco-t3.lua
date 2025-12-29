@@ -1,7 +1,6 @@
 --T3 Eco builtin v6
 -- bar-nuttyb-collective.github.io/configurator
 
--- T3_ECO_START
 do
     local unitDefs, cons =
         UnitDefs or {}, {
@@ -46,4 +45,3 @@ do
         )
     end
 end
--- T3_ECO_END

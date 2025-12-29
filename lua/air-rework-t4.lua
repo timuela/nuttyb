@@ -2,7 +2,6 @@
 -- Authors: BackBash
 -- bar-nuttyb-collective.github.io/configurator
 
--- T4_AIR_START
 do
     local unitDefs = UnitDefs or {}
     local merge = table.mergeInPlace or table.merge

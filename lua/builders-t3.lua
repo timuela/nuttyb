@@ -2,7 +2,6 @@
 -- Authors: Nervensaege, TetrisCo
 -- bar-nuttyb-collective.github.io/configurator
 
--- T3_Builders_START
 do
     local unitDefs, factions, tableMerge, factionPrefix, _taxed, taxMultiplier, tableContains =
         UnitDefs or {},
@@ -292,4 +291,3 @@ do
         end
     end
 end
--- T3_BUILDERS_END
