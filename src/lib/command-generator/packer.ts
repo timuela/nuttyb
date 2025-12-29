@@ -50,9 +50,16 @@ function formatSlotName(type: LuaTweakType, index: number): string {
     return index === 0 ? type : `${type}${index}`;
 }
 
+/** A slot being built, tracking sources and content separately */
+interface SlotBuilder {
+    sources: string[];
+    content: string;
+}
+
 /**
  * Packs Lua sources sequentially into slots.
  * Sources must be pre-sorted by priority (ascending: 0 loads first).
+ * Each slot gets a manifest comment listing all sources: -- Source: ["path1", "path2"]
  *
  * @param sources Lua sources (must be pre-sorted by priority)
  * @param slotType Either 'tweakdefs' or 'tweakunits'
@@ -70,24 +77,26 @@ export function packLuaSources(
         };
     }
 
-    const slots: string[] = [];
-    let currentSlot = '';
+    const slots: SlotBuilder[] = [];
+    let currentSlot: SlotBuilder = { sources: [], content: '' };
 
     for (const source of sources) {
-        const content = `-- Source: ${source.path}\n${source.content}`;
+        const content = source.content;
 
-        if (currentSlot === '') {
-            currentSlot = content;
-        } else if (canFitInSlot(currentSlot, content)) {
-            currentSlot += '\n\n' + content;
+        if (currentSlot.content === '') {
+            currentSlot.sources.push(source.path);
+            currentSlot.content = content;
+        } else if (canFitInSlot(currentSlot.content, content)) {
+            currentSlot.sources.push(source.path);
+            currentSlot.content += '\n\n' + content;
         } else {
             slots.push(currentSlot);
-            currentSlot = content;
+            currentSlot = { sources: [source.path], content };
         }
     }
 
     // Push the last slot
-    if (currentSlot) {
+    if (currentSlot.content) {
         slots.push(currentSlot);
     }
 
@@ -98,9 +107,10 @@ export function packLuaSources(
         );
     }
 
-    // Generate !bset commands
+    // Generate !bset commands with source manifests
     const commands = slots.map((slot, i) => {
-        const encoded = encode(minify(slot));
+        const finalContent = `-- Source: ${JSON.stringify(slot.sources)}\n${slot.content}`;
+        const encoded = encode(minify(finalContent));
         const slotName = formatSlotName(slotType, i);
         return `!bset ${slotName} ${encoded}`;
     });

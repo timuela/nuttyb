@@ -78,3 +78,19 @@ export function removeCommentsFromLine(line: string) {
 
     return result;
 }
+
+/** Pattern for source manifest comments: -- Source: ["path1", "path2"] */
+const SOURCE_MANIFEST_PATTERN = /^--\s*Source:\s*\[.*\]$/;
+
+/**
+ * Extracts source manifest comments (-- Source: [...]) from Lua content.
+ * These are preserved through minification for debugging/tracing.
+ *
+ * @param content Lua source code
+ * @returns Array of source manifest comment lines
+ */
+export function extractSourceManifests(content: string): string[] {
+    return content
+        .split('\n')
+        .filter((line) => SOURCE_MANIFEST_PATTERN.test(line.trim()));
+}
