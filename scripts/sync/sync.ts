@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 
-// import { minify } from '@/lib/lua-minificator';
 import type { LuaFile } from '@/types/types';
 
 import {
@@ -65,11 +64,10 @@ async function main() {
         const bundle: { sha: string; files: LuaFile[] } = {
             sha: commitHashSource,
             files: fileData.map((file) => {
-                // Minificator will fail to parse templates due to syntax errors, so skip them
-                // const isTemplate = file.path.endsWith('-template.lua');
                 return {
                     path: file.path,
-                    // data: isTemplate ? file.data : minify(file.data),
+                    // Minification is no longer done here,
+                    // because it might affect packing multiple Lua files into single slots.
                     data: file.data,
                 };
             }),
