@@ -55,5 +55,5 @@ export const DEFAULT_CONFIGURATION: Configuration = {
     incomeMult: 1,
     buildDistMult: 1.5,
     buildPowerMult: 1,
-    queenCount: 8,
+    queenCount: 12,
 };
