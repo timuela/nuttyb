@@ -1,6 +1,6 @@
---T3 Cons & Taxed Factories
+-- T3 Cons & Taxed Factories
 -- Authors: Nervensaege, TetrisCo
--- bar-nuttyb-collective.github.io/configurator
+-- https://github.com/nuttyb-community/nuttyb
 
 do
     local unitDefs, factions, tableMerge, factionPrefix, _taxed, taxMultiplier, tableContains =

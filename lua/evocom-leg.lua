@@ -1,6 +1,6 @@
---NuttyB v1.52c Legion Com
+-- NuttyB v1.52c Legion Com
 -- Authors: ChrispyNut, BackBash
--- bar-nuttyb-collective.github.io/configurator
+-- https://github.com/nuttyb-community/nuttyb
 
 {
     legcom = {

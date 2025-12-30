@@ -1,6 +1,6 @@
---Mini Bosses v2g
+-- Mini Bosses v2g
 -- Authors: RCore
--- bar-nuttyb-collective.github.io/configurator
+-- https://github.com/nuttyb-community/nuttyb
 
 do
     local unitDefs, tableMerge, tableCopy, raptor_matriarch_basic, customfusionexplo, spring =

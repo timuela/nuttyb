@@ -1,6 +1,7 @@
 -- Mini Bosses Extended Version
--- Authors: RCore/ Altwaal
+-- Authors: RCore, Altwaal
 -- docs.google.com/spreadsheets/d/1QSVsuAAMhBrhiZdTihVfSCwPzbbZWDLCtXWP23CU0ko
+-- https://github.com/nuttyb-community/nuttyb
 
 do
     local unitDefs, tableMerge, tableCopy, RAPTOR_MATRIARCH_BASIC, CUSTOM_FUSION_EXPLO, spring =

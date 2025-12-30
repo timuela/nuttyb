@@ -1,6 +1,6 @@
---T4 Defences NuttyB version
+-- T4 Defences NuttyB version
 -- Authors: Hedgehogzs
--- bar-nuttyb-collective.github.io/configurator
+-- https://github.com/nuttyb-community/nuttyb
 
 do
     local unitDefs, tableMerge = UnitDefs or {}, table.merge

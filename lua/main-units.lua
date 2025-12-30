@@ -1,6 +1,6 @@
---NuttyB v1.52 Units Main
+-- NuttyB v1.52 Units Main
 -- Authors: ChrispyNut, BackBash
--- bar-nuttyb-collective.github.io/configurator
+-- https://github.com/nuttyb-community/nuttyb
 
 {
     cortron = {

@@ -1,5 +1,5 @@
---NuttyB lrpc rebalance v2
--- bar-nuttyb-collective.github.io/configurator
+-- NuttyB lrpc rebalance v2
+-- https://github.com/nuttyb-community/nuttyb
 
 do
     local unitDefs = UnitDefs or {}

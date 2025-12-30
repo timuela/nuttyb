@@ -1,5 +1,5 @@
---T3 Eco builtin v6
--- bar-nuttyb-collective.github.io/configurator
+-- T3 Eco builtin v6
+-- https://github.com/nuttyb-community/nuttyb
 
 do
     local unitDefs, cons =

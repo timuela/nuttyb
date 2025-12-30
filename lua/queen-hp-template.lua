@@ -1,5 +1,5 @@
---NuttyB v1.52 $HP_MULTIPLIER$X QHP
--- bar-nuttyb-collective.github.io/configurator
+-- NuttyB v1.52 $HP_MULTIPLIER$X QHP
+-- https://github.com/nuttyb-community/nuttyb
 
 for b, c in pairs(UnitDefs) do
     if b:match('^raptor_queen_.*') then

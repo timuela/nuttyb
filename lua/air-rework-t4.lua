@@ -1,6 +1,6 @@
---NuttyB T4 Air rework
+-- NuttyB T4 Air rework
 -- Authors: BackBash
--- bar-nuttyb-collective.github.io/configurator
+-- https://github.com/nuttyb-community/nuttyb
 
 do
     local unitDefs = UnitDefs or {}

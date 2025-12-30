@@ -1,7 +1,8 @@
---Meatballlunch Reloaded
+-- Meatballlunch Reloaded
 -- This code adds new build options to the “Epic Commando” unit from the Cortex Faction (T3 Gantry with required experimental units + experimental SCAV units).
 -- The build options currently include 18 new unit launchers.
 -- Many T3 units and 9 launchers for T1-3 random units for each faction.
+-- https://github.com/nuttyb-community/nuttyb
 
 do
     local UnitDefs, armbotrail = UnitDefs or {}, 'armbotrail'

@@ -1,6 +1,6 @@
 -- T4 Eco (Legendary Fusion & Metal Converters)
 -- Authors: jackie188, Insider
--- bar-nuttyb-collective.github.io/configurator
+-- https://github.com/nuttyb-community/nuttyb
 
 do
     local unitDefs, tableMerge = UnitDefs or {}, table.merge

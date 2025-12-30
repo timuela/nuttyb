@@ -1,5 +1,5 @@
---NuttyB v1.52 Mega Nuke
--- bar-nuttyb-collective.github.io/configurator
+-- NuttyB v1.52 Mega Nuke
+-- https://github.com/nuttyb-community/nuttyb
 
 do
     local UnitDefs = UnitDefs or {}

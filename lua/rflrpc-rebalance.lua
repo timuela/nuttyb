@@ -1,5 +1,6 @@
 -- Balance on T4 RFLRPC
 -- Authors: Altwaal
+-- https://github.com/nuttyb-community/nuttyb
 
 {
     armvulc = {

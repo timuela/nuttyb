@@ -1,5 +1,5 @@
---NuttyB v1.52 $HP_MULTIPLIER$X HP
--- bar-nuttyb-collective.github.io/configurator
+-- NuttyB v1.52 $HP_MULTIPLIER$X HP
+-- https://github.com/nuttyb-community/nuttyb
 
 for unitName, unitDef in pairs(UnitDefs) do
     if string.sub(unitName, 1, 24) == 'raptor_land_swarmer_heal' then

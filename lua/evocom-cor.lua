@@ -1,6 +1,6 @@
---NuttyB v1.52c Cortex Com
+-- NuttyB v1.52c Cortex Com
 -- Authors: ChrispyNut, BackBash
--- bar-nuttyb-collective.github.io/configurator
+-- https://github.com/nuttyb-community/nuttyb
 
 {
     corcom = {

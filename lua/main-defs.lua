@@ -1,6 +1,6 @@
---NuttyB v1.52b Def Main
+-- NuttyB v1.52b Def Main
 -- Authors: ChrispyNut, BackBash
--- bar-nuttyb-collective.github.io/configurator
+-- https://github.com/nuttyb-community/nuttyb
 
 local unitDefs, repulsor, pairs, tableMerge =
     UnitDefs or {}, 'repulsor', pairs, table.merge

@@ -1,5 +1,6 @@
---Epic Ragnarok, Calamity, Starfall
---Authors: Altwaal
+-- Epic Ragnarok, Calamity, Starfall
+-- Authors: Altwaal
+-- https://github.com/nuttyb-community/nuttyb
 
 do
     local unitDefs, tableMerge = UnitDefs or {}, table.merge

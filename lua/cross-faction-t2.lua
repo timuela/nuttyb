@@ -1,6 +1,6 @@
---Cross Faction Tax 70%
+-- Cross Faction Tax 70%
 -- Authors: TetrisCo
--- bar-nuttyb-collective.github.io/configurator
+-- https://github.com/nuttyb-community/nuttyb
 
 do
     local unitDefs, tax, t2Factories, taxedT2Factories, unitI18N, _taxed, taxedTitlePostfix =
