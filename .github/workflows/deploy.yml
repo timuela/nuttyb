@@ -54,8 +54,8 @@ jobs:
       - name: Generate Lua bundle
         run: bun run sync -p .
 
-      - name: Check if the bundle is sufficient
-        run: bun run bundle-test
+      - name: Run tests
+        run: bun run test
 
       - name: Build with Next.js
         run: bun run build
