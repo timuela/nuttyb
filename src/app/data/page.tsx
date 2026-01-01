@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 
-import { Code, Group, Stack, Table, Text, Title } from '@mantine/core';
+import { Code, Group, Stack, Table, Text, Title, Tooltip } from '@mantine/core';
 
 import { useLuaBundleContext } from '@/components/contexts/lua-bundle-context';
 import PageLoader from '@/components/page-loader';
@@ -155,9 +155,16 @@ export default function Page() {
                 <Group justify='space-between'>
                     <Title order={2}>Configuration Data Reference</Title>
                     {sha && (
-                        <Text size='sm' c='dimmed'>
-                            Bundle: <Code>{sha.slice(0, 7)}</Code>
-                        </Text>
+                        <Tooltip label={sha}>
+                            <Text size='sm' c='dimmed'>
+                                Bundle:{' '}
+                                <Code>
+                                    {sha.includes('loc')
+                                        ? sha
+                                        : `${sha.slice(0, 7)}...`}
+                                </Code>
+                            </Text>
+                        </Tooltip>
                     )}
                 </Group>
                 <Text size='sm' c='dimmed'>
