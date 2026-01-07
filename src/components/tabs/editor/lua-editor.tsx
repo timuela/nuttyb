@@ -157,12 +157,21 @@ const LuaEditor: React.FC<LuaEditorProps> = ({ luaFiles, configuration }) => {
         return [...tweakdefsSlots, ...tweakunitsSlots];
     }, [luaFiles, configuration]);
 
-    const [selectedFile, setSelectedFile] = useState<string | null>(
-        luaFolderFiles[0]?.path ?? null
-    );
-    const [selectedSlot, setSelectedSlot] = useState<string | null>(
-        slotContents[0]?.slotName ?? null
-    );
+    const [selectedFile, setSelectedFile] = useState<string | null>(null);
+    const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
+
+    // Auto-select first file/slot when they become available
+    React.useEffect(() => {
+        if (!selectedFile && luaFolderFiles.length > 0) {
+            setSelectedFile(luaFolderFiles[0].path);
+        }
+    }, [selectedFile, luaFolderFiles]);
+
+    React.useEffect(() => {
+        if (!selectedSlot && slotContents.length > 0) {
+            setSelectedSlot(slotContents[0].slotName);
+        }
+    }, [selectedSlot, slotContents]);
 
     // Persist edited files to localStorage
     const [storedEditedFiles, setStoredEditedFiles] = useLocalStorage<
