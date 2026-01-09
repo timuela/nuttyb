@@ -1,16 +1,17 @@
 {
-	"[lua]": {
-		"editor.defaultFormatter": "JohnnyMorganz.stylua"
-	},
-	"terminal.integrated.defaultProfile.windows": "Windows PowerShell",
-	"editor.formatOnSave": true,
-	"files.autoSave": "onFocusChange",
-	"files.autoSaveWorkspaceFilesOnly": true,
-	"code-runner.saveAllFilesBeforeRun": true,
-	"code-runner.saveFileBeforeRun": true,
-	"trailing-spaces.trimOnSave": true,
-	"Lua.diagnostics.globals": ["UnitDefs", "Spring"],
-	"makefile.configureOnOpen": false,
-	"stylua.targetReleaseVersion": "latest",
-	"editor.formatOnSaveMode": "modificationsIfAvailable"
+    "[lua]": {
+        "editor.defaultFormatter": "JohnnyMorganz.stylua"
+    },
+    "terminal.integrated.defaultProfile.windows": "Windows PowerShell",
+    "editor.formatOnSave": true,
+    "files.autoSave": "onFocusChange",
+    "files.autoSaveWorkspaceFilesOnly": true,
+    "code-runner.saveAllFilesBeforeRun": true,
+    "code-runner.saveFileBeforeRun": true,
+    "trailing-spaces.trimOnSave": true,
+    "Lua.diagnostics.globals": ["UnitDefs", "Spring"],
+    "makefile.configureOnOpen": false,
+    "stylua.targetReleaseVersion": "latest",
+    "editor.formatOnSaveMode": "modificationsIfAvailable",
+    "files.eol": "\n"
 }
