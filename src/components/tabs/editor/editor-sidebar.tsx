@@ -208,7 +208,10 @@ export const EditorSidebar: React.FC<EditorSidebarProps> = ({
                             ? filteredFiles.map((file) => (
                                   <FileListItem
                                       key={file.path}
-                                      fileName={file.path.split('/').pop()!}
+                                      fileName={
+                                          file.path.split('/').pop() ??
+                                          file.path
+                                      }
                                       isSelected={selectedFile === file.path}
                                       isModified={isFileModified(file.path)}
                                       isUsedInConfigurator={usedFiles.has(
