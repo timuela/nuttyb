@@ -12,22 +12,20 @@ export function useEditorSizeCalculations({
 }: UseEditorSizeCalculationsProps) {
     // Slot size calculation
     const getSlotB64Size = (slotName: string): number => {
+        const content = getSlotContent(slotName);
         try {
-            const content = getSlotContent(slotName);
             return encode(minify(content.trim())).length;
         } catch {
-            const content = getSlotContent(slotName);
             return encode(content.trim()).length;
         }
     };
 
     // File size calculation
     const getFileB64Size = (path: string): number => {
+        const content = getCurrentContent(path);
         try {
-            const content = getCurrentContent(path);
             return encode(minify(content.trim())).length;
         } catch {
-            const content = getCurrentContent(path);
             return encode(content.trim()).length;
         }
     };

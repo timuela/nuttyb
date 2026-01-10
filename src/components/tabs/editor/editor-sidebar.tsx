@@ -135,6 +135,24 @@ export const EditorSidebar: React.FC<EditorSidebarProps> = ({
         );
     }, [slotContents, searchQuery]);
 
+    // Pre-calculate all file sizes to avoid recalculating on every render
+    const fileSizes = useMemo(() => {
+        const sizes = new Map<string, number>();
+        for (const file of filteredFiles) {
+            sizes.set(file.path, getFileSize(file.path));
+        }
+        return sizes;
+    }, [filteredFiles, getFileSize]);
+
+    // Pre-calculate all slot sizes to avoid recalculating on every render
+    const slotSizes = useMemo(() => {
+        const sizes = new Map<string, number>();
+        for (const slot of filteredSlots) {
+            sizes.set(slot.slotName, getSlotSize(slot.slotName));
+        }
+        return sizes;
+    }, [filteredSlots, getSlotSize]);
+
     return (
         <Paper withBorder p='sm' style={{ width: 280, flexShrink: 0 }}>
             <Stack gap='sm' style={{ height: '100%' }}>
@@ -220,7 +238,7 @@ export const EditorSidebar: React.FC<EditorSidebarProps> = ({
                                       loadedInSlots={
                                           fileToSlotsMap.get(file.path) || []
                                       }
-                                      fileSize={getFileSize(file.path)}
+                                      fileSize={fileSizes.get(file.path) ?? 0}
                                       onClick={() => onSelectFile(file.path)}
                                   />
                               ))
@@ -234,7 +252,9 @@ export const EditorSidebar: React.FC<EditorSidebarProps> = ({
                                           selectedSlot === slot.slotName
                                       }
                                       isModified={isSlotModified(slot.slotName)}
-                                      slotSize={getSlotSize(slot.slotName)}
+                                      slotSize={
+                                          slotSizes.get(slot.slotName) ?? 0
+                                      }
                                       onClick={() =>
                                           onSelectSlot(slot.slotName)
                                       }
