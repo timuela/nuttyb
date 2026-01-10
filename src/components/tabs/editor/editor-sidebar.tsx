@@ -17,7 +17,7 @@ import { IconArrowsSort, IconSearch } from '@tabler/icons-react';
 import { FileListItem } from '@/components/tabs/editor/file-list-item';
 import { SlotListItem } from '@/components/tabs/editor/slot-list-item';
 import { useLocalStorage } from '@/hooks/use-local-storage';
-import { SlotContent } from '@/hooks/use-slot-contents';
+import { SlotContent } from '@/hooks/use-slot-content';
 import { EDITOR_SORT_MODE_STORAGE_KEY } from '@/lib/configuration-storage/keys';
 import type { LuaFile, LuaTweakType } from '@/types/types';
 

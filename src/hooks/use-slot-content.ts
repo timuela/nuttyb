@@ -27,9 +27,9 @@ function getLuaPriority(path: string): number {
 }
 
 /**
- * Computes slot contents using the same packing logic as the command generator.
+ * Computes slot content using the same packing logic as the command generator.
  */
-function computeSlotContents(
+function computeSlotContent(
     luaFileMap: Map<string, string>,
     paths: string[],
     slotType: LuaTweakType,
@@ -126,24 +126,23 @@ function computeSlotContents(
     return slots;
 }
 
-export function useSlotContents(
+export function useSlotContent(
     luaFiles: LuaFile[],
     configuration: Configuration,
-    enabledTweaks: EnabledCustomTweak[]
+    enabledCustomTweaks: EnabledCustomTweak[]
 ) {
     return useMemo(() => {
         const luaFileMap = new Map(luaFiles.map((f) => [f.path, f.data]));
         const { tweakdefs: defsPaths, tweakunits: unitsPaths } =
             getMappedData(configuration);
-        const enabledCustomTweaks = enabledTweaks;
 
-        const tweakdefsSlots = computeSlotContents(
+        const tweakdefsSlots = computeSlotContent(
             luaFileMap,
             defsPaths,
             'tweakdefs',
             enabledCustomTweaks
         );
-        const tweakunitsSlots = computeSlotContents(
+        const tweakunitsSlots = computeSlotContent(
             luaFileMap,
             unitsPaths,
             'tweakunits',
@@ -151,5 +150,5 @@ export function useSlotContents(
         );
 
         return [...tweakdefsSlots, ...tweakunitsSlots];
-    }, [luaFiles, configuration, enabledTweaks]);
+    }, [luaFiles, configuration, enabledCustomTweaks]);
 }

@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { useDebouncedCallback } from '@mantine/hooks';
 
 import type { EditedFile } from '@/hooks/use-editor-storage';
-import type { SlotContent } from '@/hooks/use-slot-contents';
+import type { SlotContent } from '@/hooks/use-slot-content';
 import type { LuaFile } from '@/types/types';
 
 interface UseEditorContentProps {

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import type { SlotContent } from '@/hooks/use-slot-contents';
+import type { SlotContent } from '@/hooks/use-slot-content';
 import type { LuaFile } from '@/types/types';
 
 interface UseEditorSelectionProps {

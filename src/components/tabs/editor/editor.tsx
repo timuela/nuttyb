@@ -11,7 +11,7 @@ import { useEditorContent } from '@/hooks/use-editor-content';
 import { useEditorSelection } from '@/hooks/use-editor-selection';
 import { useEditorSizeCalculations } from '@/hooks/use-editor-size-calculations';
 import { useEditorStorage } from '@/hooks/use-editor-storage';
-import { useSlotContents } from '@/hooks/use-slot-contents';
+import { useSlotContent } from '@/hooks/use-slot-content';
 import type { Configuration } from '@/lib/command-generator/data/configuration';
 import type { LuaFile } from '@/types/types';
 
@@ -38,11 +38,7 @@ export const LuaEditor: React.FC<LuaEditorProps> = ({
     const enabledTweaks = getEnabledTweaks();
 
     // Compute slot contents
-    const slotContents = useSlotContents(
-        luaFiles,
-        configuration,
-        enabledTweaks
-    );
+    const slotContents = useSlotContent(luaFiles, configuration, enabledTweaks);
 
     // Storage management
     const {
