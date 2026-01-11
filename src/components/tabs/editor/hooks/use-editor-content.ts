@@ -1,8 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { useDebouncedCallback } from '@mantine/hooks';
 
-import type { EditedFile } from '@/hooks/use-editor-storage';
+import type { EditedFile } from '@/components/tabs/editor/hooks/use-editor-storage';
 import type { SlotContent } from '@/hooks/use-slot-content';
 import type { LuaFile } from '@/types/types';
 
@@ -27,12 +27,50 @@ export function useEditorContent({
     setEditedFiles,
     setEditedSlots,
 }: UseEditorContentProps) {
-    // Track pending edits for immediate UI updates
+    // Selection State
+    const [rawSelectedFile, setRawSelectedFile] = useState<string | null>(null);
+    const [rawSelectedSlot, setRawSelectedSlot] = useState<string | null>(null);
+
+    const selectedFile = useMemo(() => {
+        if (!rawSelectedFile) {
+            return luaFolderFiles.length > 0 ? luaFolderFiles[0].path : null;
+        }
+        const exists = luaFolderFiles.some((f) => f.path === rawSelectedFile);
+        return exists
+            ? rawSelectedFile
+            : luaFolderFiles.length > 0
+              ? luaFolderFiles[0].path
+              : null;
+    }, [rawSelectedFile, luaFolderFiles]);
+
+    const selectedSlot = useMemo(() => {
+        if (!rawSelectedSlot) {
+            return slotContents.length > 0 ? slotContents[0].slotName : null;
+        }
+        const exists = slotContents.some((s) => s.slotName === rawSelectedSlot);
+        return exists
+            ? rawSelectedSlot
+            : slotContents.length > 0
+              ? slotContents[0].slotName
+              : null;
+    }, [rawSelectedSlot, slotContents]);
+
+    // Setters update raw selection
+    const setSelectedFile = useCallback(
+        (value: string | null) => setRawSelectedFile(value),
+        []
+    );
+    const setSelectedSlot = useCallback(
+        (value: string | null) => setRawSelectedSlot(value),
+        []
+    );
+
+    // Pending Edits State
     const [pendingEdits, setPendingEdits] = useState<Map<string, string>>(
         new Map()
     );
 
-    // Content getters
+    // Content Getters
     const getCurrentContent = useCallback(
         (path: string): string => {
             // Check pending edits first for immediate UI updates
@@ -61,7 +99,7 @@ export function useEditorContent({
         [pendingEdits, editedSlots, slotContents]
     );
 
-    // Modification checks
+    // Modification Checks
     const isFileModified = useCallback(
         (path: string): boolean => {
             const edited = editedFiles.get(path);
@@ -80,7 +118,7 @@ export function useEditorContent({
         [editedSlots]
     );
 
-    // Debounced storage write handlers
+    // Change Handlers
     const debouncedFileWrite = useDebouncedCallback(
         (path: string, originalData: string, currentData: string) => {
             setEditedFiles((prev) => {
@@ -121,7 +159,6 @@ export function useEditorContent({
         500
     );
 
-    // Editor change handler
     const handleFileChange = useCallback(
         (path: string, value: string) => {
             const original = luaFolderFiles.find((f) => f.path === path);
@@ -158,7 +195,7 @@ export function useEditorContent({
         [slotContents, debouncedSlotWrite]
     );
 
-    // Reset handlers
+    // Reset Handlers
     const resetFile = useCallback(
         (path: string) => {
             setEditedFiles((prev) => {
@@ -182,12 +219,21 @@ export function useEditorContent({
     );
 
     return {
+        // Selection state
+        selectedFile,
+        selectedSlot,
+        setSelectedFile,
+        setSelectedSlot,
+        // Content getters
         getCurrentContent,
         getSlotContent,
+        // Modification checks
         isFileModified,
         isSlotModified,
+        // Change handlers
         handleFileChange,
         handleSlotChange,
+        // Reset handlers
         resetFile,
         resetSlot,
     };

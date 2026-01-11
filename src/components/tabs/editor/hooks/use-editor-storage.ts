@@ -51,13 +51,21 @@ export function useEditorStorage() {
         [setStoredEditedSlots]
     );
 
-    const modifiedFileCount = [...editedFiles.values()].filter(
-        (f) => f.currentData !== f.originalData
-    ).length;
+    const modifiedFileCount = useMemo(
+        () =>
+            [...editedFiles.values()].filter(
+                (f) => f.currentData !== f.originalData
+            ).length,
+        [editedFiles]
+    );
 
-    const modifiedSlotCount = [...editedSlots.values()].filter(
-        (f) => f.currentData !== f.originalData
-    ).length;
+    const modifiedSlotCount = useMemo(
+        () =>
+            [...editedSlots.values()].filter(
+                (f) => f.currentData !== f.originalData
+            ).length,
+        [editedSlots]
+    );
 
     return {
         editedFiles,

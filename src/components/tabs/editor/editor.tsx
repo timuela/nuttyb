@@ -7,10 +7,9 @@ import { Flex } from '@mantine/core';
 import { useCustomTweaksContext } from '@/components/contexts/custom-tweaks-context';
 import { EditorPanel } from '@/components/tabs/editor/editor-panel';
 import { EditorSidebar } from '@/components/tabs/editor/editor-sidebar';
-import { useEditorContent } from '@/hooks/use-editor-content';
-import { useEditorSelection } from '@/hooks/use-editor-selection';
-import { useEditorSizeCalculations } from '@/hooks/use-editor-size-calculations';
-import { useEditorStorage } from '@/hooks/use-editor-storage';
+import { calculateEncodedSize } from '@/components/tabs/editor/editor-utils';
+import { useEditorContent } from '@/components/tabs/editor/hooks/use-editor-content';
+import { useEditorStorage } from '@/components/tabs/editor/hooks/use-editor-storage';
 import { useSlotContent } from '@/hooks/use-slot-content';
 import type { Configuration } from '@/lib/command-generator/data/configuration';
 import type { LuaFile } from '@/types/types';
@@ -50,12 +49,12 @@ export const LuaEditor: React.FC<LuaEditorProps> = ({
         modifiedSlotCount,
     } = useEditorStorage();
 
-    // Selection state
-    const { selectedFile, selectedSlot, setSelectedFile, setSelectedSlot } =
-        useEditorSelection({ luaFolderFiles, slotContents });
-
-    // Content management
+    // Unified content management with selection
     const {
+        selectedFile,
+        selectedSlot,
+        setSelectedFile,
+        setSelectedSlot,
         getCurrentContent,
         getSlotContent,
         isFileModified,
@@ -71,12 +70,6 @@ export const LuaEditor: React.FC<LuaEditorProps> = ({
         editedSlots,
         setEditedFiles,
         setEditedSlots,
-    });
-
-    // Size calculations
-    const { getSlotB64Size, getFileB64Size } = useEditorSizeCalculations({
-        getCurrentContent,
-        getSlotContent,
     });
 
     // Editor change handler
@@ -141,10 +134,10 @@ export const LuaEditor: React.FC<LuaEditorProps> = ({
         return slot
             ? {
                   type: slot.type,
-                  slotSize: getSlotB64Size(selectedSlot),
+                  slotSize: calculateEncodedSize(getSlotContent(selectedSlot)),
               }
             : null;
-    }, [viewMode, selectedSlot, slotContents, getSlotB64Size]);
+    }, [viewMode, selectedSlot, slotContents, getSlotContent]);
 
     const handleReset = () => {
         if (viewMode === 'sources' && selectedFile) {
@@ -167,8 +160,12 @@ export const LuaEditor: React.FC<LuaEditorProps> = ({
                 onSelectSlot={setSelectedSlot}
                 isFileModified={isFileModified}
                 isSlotModified={isSlotModified}
-                getSlotSize={getSlotB64Size}
-                getFileSize={getFileB64Size}
+                getSlotSize={(slotName) =>
+                    calculateEncodedSize(getSlotContent(slotName))
+                }
+                getFileSize={(path) =>
+                    calculateEncodedSize(getCurrentContent(path))
+                }
                 modifiedFileCount={modifiedFileCount}
                 modifiedSlotCount={modifiedSlotCount}
             />

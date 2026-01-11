@@ -7,10 +7,9 @@ import { IconCode, IconPackage } from '@tabler/icons-react';
 import type { editor } from 'monaco-editor';
 
 import { EditorToolbar } from '@/components/tabs/editor/editor-toolbar';
-import { encode } from '@/lib/encoders/base64';
-import { minify } from '@/lib/lua-utils/minificator';
 import type { LuaTweakType } from '@/types/types';
 
+import { encodeMinified } from './editor-utils';
 import { ViewMode } from './types';
 
 interface EditorPanelProps {
@@ -53,15 +52,6 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
     const handleCopy = useCallback(() => {
         clipboard.copy(currentContent);
     }, [currentContent, clipboard]);
-
-    const handleCopyBase64 = useCallback(() => {
-        try {
-            const minified = minify(currentContent.trim());
-            base64Clipboard.copy(encode(minified));
-        } catch {
-            base64Clipboard.copy(encode(currentContent.trim()));
-        }
-    }, [currentContent, base64Clipboard]);
 
     if (!currentTitle) {
         return (
@@ -106,7 +96,9 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
                         slotInfo={slotInfo}
                         onReset={onReset}
                         onCopy={handleCopy}
-                        onCopyBase64={handleCopyBase64}
+                        onCopyBase64={() =>
+                            base64Clipboard.copy(encodeMinified(currentContent))
+                        }
                         onDownload={onDownload}
                         isCopied={clipboard.copied}
                         isBase64Copied={base64Clipboard.copied}
