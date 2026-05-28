@@ -2,13 +2,15 @@
 
 import React, { useCallback, useState } from 'react';
 
-import { Button, Flex, Stack, Title } from '@mantine/core';
+import { Button, Divider, Flex, Stack, Title } from '@mantine/core';
 import { IconArrowBackUp, IconCheck } from '@tabler/icons-react';
 
 import { ICON_SIZE_MD } from '@/components/common/icon-style';
 import { useConfiguratorContext } from '@/components/contexts/configurator-context';
 import { useCustomTweaksContext } from '@/components/contexts/custom-tweaks-context';
+import { usePresetsContext } from '@/components/contexts/presets-context';
 
+import { PresetShowcase } from './preset-showcase';
 import { CustomTweaksSection } from './sections/custom-tweaks';
 import { DifficultySection } from './sections/difficulty';
 import { ExtrasSection } from './sections/extras';
@@ -19,15 +21,17 @@ export const Configurator: React.FC = () => {
     const hasCustomTweaks = customTweaks.length > 0;
 
     const { resetConfiguration } = useConfiguratorContext();
+    const { clearActivePreset } = usePresetsContext();
     const [isResetSuccessShowing, setResetSuccessShowing] = useState(false);
 
     const handleReset = useCallback(() => {
         resetConfiguration();
         clearEnabledTweaks();
+        clearActivePreset();
 
         setResetSuccessShowing(true);
         setTimeout(() => setResetSuccessShowing(false), 2000);
-    }, [resetConfiguration, clearEnabledTweaks]);
+    }, [resetConfiguration, clearEnabledTweaks, clearActivePreset]);
 
     return (
         <Stack gap='md'>
@@ -47,6 +51,9 @@ export const Configurator: React.FC = () => {
                     {!isResetSuccessShowing ? 'Reset' : 'Configuration reset!'}
                 </Button>
             </Flex>
+
+            <PresetShowcase />
+            <Divider />
 
             <GeneralSection />
             <DifficultySection />

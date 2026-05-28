@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
     Group,
@@ -12,6 +12,7 @@ import {
     Title,
     Tooltip,
 } from '@mantine/core';
+import { useDebouncedCallback } from '@mantine/hooks';
 import { IconInfoCircle } from '@tabler/icons-react';
 
 import { useConfiguratorContext } from '@/components/contexts/configurator-context';
@@ -77,6 +78,27 @@ const LabelWithTooltip: React.FC<LabelWithTooltipProps> = ({
 
 export const GeneralSection: React.FC = () => {
     const { configuration, setProperty } = useConfiguratorContext();
+    const displayLobbyName =
+        configuration.lobbyName || getDefaultLobbyNameTag(configuration);
+    const [localLobbyName, setLocalLobbyName] = useState(displayLobbyName);
+    const [prevLobbyName, setPrevLobbyName] = useState(displayLobbyName);
+
+    if (displayLobbyName !== prevLobbyName) {
+        setLocalLobbyName(displayLobbyName);
+        setPrevLobbyName(displayLobbyName);
+    }
+
+    const debouncedSetProperty = useDebouncedCallback((val: string) => {
+        setProperty('lobbyName', val);
+    }, 1000);
+
+    const handleLobbyNameChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const val = event.currentTarget.value;
+        setLocalLobbyName(val);
+        debouncedSetProperty(val);
+    };
 
     return (
         <Stack gap='sm'>
@@ -91,13 +113,8 @@ export const GeneralSection: React.FC = () => {
                             />
                         }
                         placeholder={getDefaultLobbyNameTag(configuration)}
-                        value={
-                            configuration.lobbyName ||
-                            getDefaultLobbyNameTag(configuration)
-                        }
-                        onChange={(event) =>
-                            setProperty('lobbyName', event.currentTarget.value)
-                        }
+                        value={localLobbyName}
+                        onChange={handleLobbyNameChange}
                     />
                     <NativeSelect
                         label='Map'
