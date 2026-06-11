@@ -80,6 +80,18 @@ When making changes to the UI, please ensure that your code adheres to the exist
 bun test
 ```
 
-2. Commit your changes with a descriptive commit message.
-3. Push your changes to your forked repository.
-4. Open a pull request (PR) against the origin repository. Please provide a clear description of the changes you have made and any relevant context.
+2. Update the changelog. The root `CHANGELOG.md` is grouped by date (newest first) and is shown both on GitHub and on the configurator's About page. You can scaffold a draft section from commits made since the latest recorded date:
+
+```bash
+bun run changelog-draft
+```
+
+This inserts a new dated section with a bullet list. Trim out internal-only changes and tidy the wording before committing. Use `--dry-run` to preview without writing.
+
+3. Commit your changes with a descriptive commit message.
+4. Push your changes to your forked repository.
+5. Open a pull request (PR) against the origin repository. Please provide a clear description of the changes you have made and any relevant context.
+
+### Deployment (GitHub Pages)
+
+Deployment is automated using GitHub Actions. Pushes to the `main` branch will trigger a build and deploy the site to GitHub Pages. By default, it uses the repository name to define the base path for the web application. If you want to use a custom base path, you can set the `BASE_PATH` repository variable in your repository settings. Note that you should not include a leading slash in the `BASE_PATH` value.
