@@ -83,6 +83,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# auto-generated Lua bundle
+/public/data/lua-bundle.json
+
 # agentic coding
 CLAUDE.local.md
 PROJECT.md

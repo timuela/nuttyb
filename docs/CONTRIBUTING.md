@@ -26,6 +26,12 @@ git clone --recurse-submodules <your-forked-repo-url>
 bun i
 ```
 
+6. Generate the Lua bundle that Configurator will use:
+
+```bash
+bun run sync -p .
+```
+
 ## Making changes
 
 ### Game tweaks
