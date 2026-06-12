@@ -1,5 +1,5 @@
 -- T4Eco
--- T4 Eco (Legendary Fusion & Metal Converters)
+-- T4 Eco (Fusion Reactors & Energy Converters)
 -- Authors: jackie188, Insider
 -- https://github.com/nuttyb-community/nuttyb
 
@@ -24,19 +24,17 @@ do
     end
 
     local factions = { 'arm', 'cor', 'leg' }
-    local factionNames = {
-        arm = 'Armada ',
-        cor = 'Cortex ',
-        leg = 'Legion ',
-    }
 
     local function scaled(value, multiplier)
-        if value then
-            return math.ceil(value * multiplier)
-        end
-        return nil
+        return value and math.ceil(value * multiplier) or nil
     end
 
+    local function round(value)
+        return math.floor(value + 0.5)
+    end
+
+    -- cloneUnit deep-merges, so any field not overridden is inherited from
+    -- the source unit.
     local function cloneUnit(sourceUnit, targetUnit, overrides)
         if unitDefs[sourceUnit] and not unitDefs[targetUnit] then
             unitDefs[targetUnit] = tableMerge(unitDefs[sourceUnit], overrides)
@@ -45,7 +43,7 @@ do
 
     local newUnitNames = {}
 
-    -- Create Legendary metal converters and fusion reactors for each faction
+    -- Create T4 energy converters and fusion reactors for each faction
     for _, faction in ipairs(factions) do
         local isLegion = (faction == 'leg')
 
@@ -56,53 +54,36 @@ do
         local newConverterName = baseConverterName .. 't4'
         local metalMakerDef = unitDefs[templateConverterName]
 
-        -- T4 Legendary Energy Converter
+        -- T4 Energy Converter
         if metalMakerDef then
             local t4Multiplier = 2.0
+            local capacity = scaled(
+                tonumber(metalMakerDef.customparams.energyconv_capacity) or 0,
+                2
+            )
+            local efficiency = 0.022
             cloneUnit(templateConverterName, newConverterName, {
-                description = 'Legendary Energy Converter',
+                name = 'T4 Energy Converter',
+                description = 'T4 Energy Converter',
                 metalcost = scaled(metalMakerDef.metalcost, t4Multiplier),
                 energycost = scaled(metalMakerDef.energycost, t4Multiplier),
                 buildtime = scaled(metalMakerDef.buildtime, t4Multiplier),
                 health = scaled(metalMakerDef.health, t4Multiplier * 6),
-                customparams = {
-                    energyconv_capacity = scaled(metalMakerDef.customparams.energyconv_capacity, 2),
-                    energyconv_efficiency = 0.022,
-                    buildinggrounddecaldecayspeed = metalMakerDef.customparams.buildinggrounddecaldecayspeed,
-                    buildinggrounddecalsizex = metalMakerDef.customparams.buildinggrounddecalsizex,
-                    buildinggrounddecalsizey = metalMakerDef.customparams.buildinggrounddecalsizey,
-                    buildinggrounddecaltype = metalMakerDef.customparams.buildinggrounddecaltype,
-                    model_author = metalMakerDef.customparams.model_author,
-                    normaltex = metalMakerDef.customparams.normaltex,
-                    removestop = metalMakerDef.customparams.removestop,
-                    removewait = metalMakerDef.customparams.removewait,
-                    subfolder = metalMakerDef.customparams.subfolder,
-                    techlevel = metalMakerDef.customparams.techlevel,
-                    unitgroup = metalMakerDef.customparams.unitgroup,
-                    usebuildinggrounddecal = metalMakerDef.customparams.usebuildinggrounddecal,
-                    i18n_en_humanname = 'Legendary Energy Converter',
-                    i18n_en_tooltip = 'Converts 12000 energy into 264 metal per sec (non-explosive)',
-                },
-                name = 'Legendary Energy Converter',
-                buildpic = metalMakerDef.buildpic,
-                objectname = metalMakerDef.objectname,
                 footprintx = 6,
                 footprintz = 6,
-                yardmap = metalMakerDef.yardmap,
-                script = metalMakerDef.script,
-                activatewhenbuilt = metalMakerDef.activatewhenbuilt,
+                -- Non-explosive: die like a generic building instead of the
+                -- converter's violent explosion
                 explodeas = 'largeBuildingexplosiongeneric',
                 selfdestructas = 'largeBuildingExplosionGenericSelfd',
-                sightdistance = metalMakerDef.sightdistance,
-                seismicsignature = metalMakerDef.seismicsignature,
-                idleautoheal = metalMakerDef.idleautoheal,
-                idletime = metalMakerDef.idletime,
-                maxslope = metalMakerDef.maxslope,
-                maxwaterdepth = metalMakerDef.maxwaterdepth,
-                maxacc = metalMakerDef.maxacc,
-                maxdec = metalMakerDef.maxdec,
-                corpse = metalMakerDef.corpse,
-                canrepeat = metalMakerDef.canrepeat,
+                customparams = {
+                    energyconv_capacity = capacity,
+                    energyconv_efficiency = efficiency,
+                    i18n_en_humanname = 'T4 Energy Converter',
+                    i18n_en_tooltip = ('Converts %d energy into %d metal per sec (non-explosive)'):format(
+                        capacity,
+                        round(capacity * efficiency)
+                    ),
+                },
             })
 
             table.insert(newUnitNames, newConverterName)
@@ -114,56 +95,39 @@ do
         local newFusionName = baseFusionName .. 't4'
         local fusionDef = unitDefs[templateFusionName]
 
-        -- Legendary Fusion Reactor (200% version)
+        -- T4 Fusion Reactor
         if fusionDef then
+            local energyMake = scaled(fusionDef.energymake, 2.4) or 0
             cloneUnit(templateFusionName, newFusionName, {
+                name = 'T4 Fusion Reactor',
+                description = 'T4 Fusion Reactor',
                 buildtime = scaled(fusionDef.buildtime, 1.8),
-                name = 'Legendary Fusion Reactor',
-                description = 'Legendary Fusion Reactor',
                 metalcost = scaled(fusionDef.metalcost, 2.0),
                 energycost = scaled(fusionDef.energycost, 2.0),
-                energymake = scaled(fusionDef.energymake, 2.4),
+                energymake = energyMake,
                 energystorage = scaled(fusionDef.energystorage, 6.0),
                 health = scaled(fusionDef.health, 2.0 * 3),
-                buildpic = fusionDef.buildpic,
-                collisionvolumeoffsets = fusionDef.collisionvolumeoffsets,
-                collisionvolumescales = fusionDef.collisionvolumescales,
-                collisionvolumetype = fusionDef.collisionvolumetype,
+                idleautoheal = scaled(fusionDef.idleautoheal, 6),
                 damagemodifier = 0.95,
-                buildangle = fusionDef.buildangle,
-                objectname = fusionDef.objectname,
                 footprintx = 12,
                 footprintz = 12,
-                yardmap = fusionDef.yardmap,
-                script = fusionDef.script,
-                activatewhenbuilt = fusionDef.activatewhenbuilt,
+                -- Non-explosive: die like a generic building instead of the
+                -- fusion's catastrophic explosion
                 explodeas = 'largeBuildingexplosiongeneric',
                 selfdestructas = 'largeBuildingExplosionGenericSelfd',
-                sightdistance = fusionDef.sightdistance,
-                seismicsignature = fusionDef.seismicsignature,
-                idleautoheal = scaled(fusionDef.idleautoheal, 6),
-                idletime = fusionDef.idletime,
-                maxslope = fusionDef.maxslope,
-                maxwaterdepth = fusionDef.maxwaterdepth,
-                maxacc = fusionDef.maxacc,
-                maxdec = fusionDef.maxdec,
-                corpse = fusionDef.corpse,
-                canrepeat = fusionDef.canrepeat,
                 customparams = {
                     buildinggrounddecaldecayspeed = 30,
                     buildinggrounddecalsizex = 18,
                     buildinggrounddecalsizey = 18,
-                    buildinggrounddecaltype = fusionDef.customparams.buildinggrounddecaltype,
-                    model_author = fusionDef.customparams.model_author,
-                    normaltex = fusionDef.customparams.normaltex,
-                    subfolder = fusionDef.customparams.subfolder,
                     removestop = true,
                     removewait = true,
                     techlevel = 3,
                     unitgroup = 'energy',
                     usebuildinggrounddecal = true,
-                    i18n_en_humanname = 'Legendary Fusion Reactor',
-                    i18n_en_tooltip = 'Produces 72000 Energy (non-explosive)',
+                    i18n_en_humanname = 'T4 Fusion Reactor',
+                    i18n_en_tooltip = ('Produces %d Energy (non-explosive)'):format(
+                        energyMake
+                    ),
                 },
                 sfxtypes = {
                     pieceexplosiongenerators = {
